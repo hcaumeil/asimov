@@ -13,7 +13,14 @@ class Products {
     lateinit var repository : CategoryRepository
     @GetMapping("/products")
     fun products(@RequestParam categoryName : String, model : Model): String {
-        model.addAttribute("cat", categoryName)
+        // Get category name from id
+
+        // Get all products from category
+        val products : List<Products>? = null
+
+        // Set the model with data
+        model.addAttribute("category", categoryName)
+        model.addAttribute("products", products)
         return "products"
     }
 }

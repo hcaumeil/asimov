@@ -6,6 +6,29 @@
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
-    <p th:text="${cat}">cat</p>
+    <h1 th:text="${cat}">cat</h1>
+    <table>
+        <thead>
+        <tr>
+            <td>Photo</td>
+            <td>Réference</td>
+            <td>Description</td>
+            <td>Prix</td>
+            <td>Stock</td>
+            <td>Commande</td>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${products}">
+                <td>IMAGE</td>
+                <td  th:text="${p.reference}">reference</td>
+                <td  th:text="${p.description}">description</td>
+                <td  th:text="${p.price}">price</td>
+                <td  th:text="${p.stock}">stock</td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
