@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <header th:fragment="header">
+            <div id="header-main">
+                <h1>Asimov</h1>
+                <h3>The electronics best friend</h3>
+            </div>
+            <nav id="header-nav-bar">
+                <div id="nav-bar-right">
+                    <a href="index.html" th:href="@{/}">Accueil</a>
+                    <a href="categories.html" th:href="@{/categories}">Catégories</a>
+                    <a href="contact.html" th:href="@{/contact}">Contact</a>
+                </div>
+                <div id="nav-bar-left">
+                </div>
+            </nav>
+        </header>
+    </body>
+</html>
+
+
