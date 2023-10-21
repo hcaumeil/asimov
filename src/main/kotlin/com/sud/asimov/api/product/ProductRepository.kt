@@ -4,4 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-interface CategoryRepository : JpaRepository<Category, String> {}
+interface ProductRepository : JpaRepository<Product, Long> {
+  fun findByCategory(category: Category): List<Product>
+}

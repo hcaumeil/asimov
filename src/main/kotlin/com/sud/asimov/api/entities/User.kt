@@ -12,11 +12,11 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 class User (
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  val id: Long? = null,
-  var name: String,
-  var family_name: String,
-  var email: String,
-  var password: String) {
+  public val id: Long? = null,
+  public var name: String,
+  public var family_name: String,
+  public var email: String,
+  public var password: String) {
 }
 
 // class UserEntry {

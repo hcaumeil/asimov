@@ -10,8 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 class Category(
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  val id: Long? = null,
-  var name: String,   
+  @Id
+  public var name: String,   
 ) {
 }
