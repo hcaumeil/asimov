@@ -23,9 +23,11 @@ class Login {
         model.addAttribute("loginDTO", loginData) // debug
 
         // verifie email / password
-        if (loginData.email == "a") // debug
-        // Return error
-        return "login"
+        if (loginData.email == "a") { // Debug
+            model.addAttribute("error", "Erreur : Email ou mot de passe incorrect")
+            // Return error
+            return "login"
+        }
 
         // Return index
         return "index"
