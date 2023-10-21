@@ -8,7 +8,9 @@
     <div th:insert="~{header :: header}"></div>
     <div id="center-categories">
         <p>Nos catégories : </p>
-
+        <ul th:each="c : ${categories}">
+            <li th:text="${c.name}">name</li>
+        </ul>
     </div>
 </body>
 </html>
