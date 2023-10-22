@@ -9,11 +9,35 @@
     <div >
         <h1>Connexion</h1>
         <p th:text="${error}" class="error-message">error</p>
-        <form action="#" th:action="@{/login}" th:object="${loginDTO}" method="post">
-            <p>Email: <input type="text" th:field="*{email}" /></p>
-            <p>Mot de passe: <input type="password" th:field="*{password}" /></p>
+        <form id="login-form">
+            <p>Email: <input id="login-form-mail" type="text"/></p>
+            <p>Mot de passe: <input id="login-form-password" type="password" /></p>
             <p><input type="submit" value="Soumettre" /> <input type="reset" value="Reinitialiser" /></p>
         </form>
+        <script>
+            const form = document.getElementById('login-form');
+            if (form.attachEvent) {
+                form.attachEvent("submit", processForm);
+            } else {
+                form.addEventListener("submit", processForm);
+            }
+            function processForm(e) {
+                if (e.preventDefault) e.preventDefault();
+                const email = document.getElementById('login-form-mail').value;
+                const password = document.getElementById("login-form-password").value;
+
+                fetch('http://localhost:8080/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({email, password})
+                }).then(res => res.json()).then(res => console.log(res))
+
+                return false;
+            }
+        </script>
     </div>
 </body>
 </html>

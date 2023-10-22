@@ -20,8 +20,8 @@
         </tr>
         </thead>
         <tbody>
-            <form id="my-form" action="#" th:action="@{/products/p}" th:object="${categoryProductCommandDTO}" method="post">
-                <input id="form-category" type="hidden" value="test" th:field="*{categoryName}" th:value="${category}"/>
+            <form id="products-form" action="#" th:action="@{/products/p}" th:object="${categoryProductCommandDTO}" method="post">
+                <input id="products-form-category" type="hidden" value="test" th:field="*{categoryName}" th:value="${category}"/>
                 <tr th:each="p, itemStat : ${products}">
                     <td><img th:src="@{'/api/file/' + ${p.image.name}}"></td>
                     <td th:text="${p.reference}">reference</td>
@@ -30,14 +30,14 @@
                     <td th:text="${p.stock}">stock</td>
                     <td>
                         <button>+</button>
-                        <input class="form-quantity" type="text" th:field="*{quantity[__${itemStat.index}__]}" th:value="*{quantity[__${itemStat.index}__]}"/>
+                        <input class="products-form-quantity" type="text" th:field="*{quantity[__${itemStat.index}__]}" th:value="*{quantity[__${itemStat.index}__]}"/>
                         <button>-</button>
                     </td>
                 </tr>
                 <input type="submit" value="Commander" />
             </form>
             <script>
-                const form = document.getElementById('my-form');
+                const form = document.getElementById('products-form');
                 if (form.attachEvent) {
                     form.attachEvent("submit", processForm);
                 } else {
@@ -45,8 +45,8 @@
                 }
                 function processForm(e) {
                     if (e.preventDefault) e.preventDefault();
-                    const categoryName = document.getElementById('form-category').value;
-                    const b = document.getElementsByClassName("form-quantity");
+                    const categoryName = document.getElementById('products-form-category').value;
+                    const b = document.getElementsByClassName("products-form-quantity");
 
                     let quantity = [];
                     for(let i = 0; i < b.length; i++) {

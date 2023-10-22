@@ -1,7 +1,10 @@
 package com.sud.asimov.pages
 
+import com.sud.asimov.User
+import com.sud.asimov.UserRepository
 import com.sud.asimov.pages.dto.LoginDTO
 import com.sud.asimov.pages.dto.RegisterDTO
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping
 
 @Controller
 class Register {
+    @Autowired
+    lateinit var repository : UserRepository;
     @GetMapping("/register")
     fun categories(model : Model) : String {
         model.addAttribute("registerDTO", RegisterDTO())
@@ -34,7 +39,7 @@ class Register {
         }
 
         // Inscription en BD
-        // TODO
+        repository.save(User(null, registerData.name, registerData.family_name, registerData.email, registerData.password1))
 
         model.addAttribute("message", "Vous êtes bien inscrit")
         return "register"
