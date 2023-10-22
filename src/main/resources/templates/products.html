@@ -20,7 +20,8 @@
         </tr>
         </thead>
         <tbody>
-            <form action="#" th:action="@{/products(categoryName=${category})}" th:object="${categoryProductCommandDTO}" method="post">
+            <form id="my-form" action="#" th:action="@{/products/p}" th:object="${categoryProductCommandDTO}" method="post">
+                <input id="form-category" type="hidden" value="test" th:field="*{categoryName}" th:value="${category}"/>
                 <tr th:each="p, itemStat : ${products}">
                     <td><img th:src="@{'/api/file/' + ${p.image.name}}"></td>
                     <td th:text="${p.reference}">reference</td>
@@ -29,12 +30,41 @@
                     <td th:text="${p.stock}">stock</td>
                     <td>
                         <button>+</button>
-                        <input type="text" th:field="*{quantity[__${itemStat.index}__]}" />
+                        <input class="form-quantity" type="text" th:field="*{quantity[__${itemStat.index}__]}" th:value="*{quantity[__${itemStat.index}__]}"/>
                         <button>-</button>
                     </td>
                 </tr>
                 <input type="submit" value="Commander" />
             </form>
+            <script>
+                const form = document.getElementById('my-form');
+                if (form.attachEvent) {
+                    form.attachEvent("submit", processForm);
+                } else {
+                    form.addEventListener("submit", processForm);
+                }
+                function processForm(e) {
+                    if (e.preventDefault) e.preventDefault();
+                    const categoryName = document.getElementById('form-category').value;
+                    const b = document.getElementsByClassName("form-quantity");
+
+                    let quantity = [];
+                    for(let i = 0; i < b.length; i++) {
+                        quantity[i] = b.item(i).value
+                    }
+
+                        fetch('http://localhost:8080/products/p', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({categoryName, quantity})
+                        }).then(res => res.ok).then(res => console.log(res))
+
+                    return false;
+                }
+            </script>
         </tbody>
     </table>
 </body>

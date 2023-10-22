@@ -7,12 +7,11 @@ import com.sud.asimov.pages.dto.CategoryProductCommandDTO
 import com.sud.asimov.pages.dto.ContactDTO
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 
 @Controller
 class Products {
@@ -24,7 +23,7 @@ class Products {
         // Get all products from category
         val products : List<Product> = repository.findByCategory(Category(categoryName))
 
-        val form = CategoryProductCommandDTO(MutableList(products.indices.last + 1) {0})
+        val form = CategoryProductCommandDTO(categoryName, MutableList(products.indices.last + 1) {0})
         model.addAttribute("categoryProductCommandDTO", form)
 
         // Set the model with data
@@ -33,20 +32,13 @@ class Products {
         return "products"
     }
 
-    @PostMapping("/products")
+    @PostMapping("/products/p")
     @Transactional
-    fun categoryProductCommandSubmit(@RequestParam categoryName : String, @ModelAttribute categoryProductCommandData : CategoryProductCommandDTO, model: Model): String {
+    fun categoryProductCommandSubmit(@RequestBody categoryProductCommandData : CategoryProductCommandDTO, model: Model): ResponseEntity<String> {
         // Traitement
         // Erreur inattendu ?
         //model.addAttribute("message", "Erreur : Un problème serveur est survenu")
 
-        // Get all products from category
-        val products : List<Product> = repository.findByCategory(Category(categoryName))
-
-        val form = CategoryProductCommandDTO(MutableList(products.indices.last + 1) {0})
-        model.addAttribute("categoryProductCommandDTO", form)
-        model.addAttribute("category", categoryName)
-        model.addAttribute("message", "Votre commande a bien été pris en compte")
-        return "products"
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Commande pris en compte")
     }
 }
