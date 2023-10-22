@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${cat}">cat</title>
+    <title th:text="${category}">cat</title>
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
-    <h1 th:text="${cat}">cat</h1>
+    <h1 th:text="${category}">category</h1>
+    <p th:text="${message}" class="info-message">message</p>
     <table>
         <thead>
         <tr>
@@ -19,15 +20,21 @@
         </tr>
         </thead>
         <tbody>
-            <tr th:each="p : ${products}">
-                <td></td>
-                <td  th:text="${p.reference}">reference</td>
-                <td  th:text="${p.description}">description</td>
-                <td  th:text="${p.price}">price</td>
-                <td  th:text="${p.stock}">stock</td>
-                <td>
-                </td>
-            </tr>
+            <form action="#" th:action="@{/products(categoryName=${category})}" th:object="${categoryProductCommandDTO}" method="post">
+                <tr th:each="p, itemStat : ${products}">
+                    <td><img th:src="@{'/api/file/' + ${p.image.name}}"></td>
+                    <td th:text="${p.reference}">reference</td>
+                    <td th:text="${p.description}">description</td>
+                    <td th:text="${p.price}">price</td>
+                    <td th:text="${p.stock}">stock</td>
+                    <td>
+                        <button>+</button>
+                        <input type="text" th:field="*{quantity[__${itemStat.index}__]}" />
+                        <button>-</button>
+                    </td>
+                </tr>
+                <input type="submit" value="Commander" />
+            </form>
         </tbody>
     </table>
 </body>
