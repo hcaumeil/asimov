@@ -9,7 +9,7 @@
     <div id="center-categories">
         <p>Nos catégories : </p>
         <ul th:each="c : ${categories}">
-            <li ><a th:text="${c.name}" href="products.html" th:href="@{/products(categoryName=${c.id})}">name</a></li>
+            <li ><a th:text="${c.name}" href="products.html" th:href="@{/products(categoryName=${c.name})}">name</a></li>
         </ul>
     </div>
 </body>
