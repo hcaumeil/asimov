@@ -27,7 +27,6 @@ class Login {
             // Return error
             return "login"
         }
-
         // Return index
         return "index"
     }
