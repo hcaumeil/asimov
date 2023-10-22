@@ -18,30 +18,3 @@ class User (
   public var email: String,
   public var password: String) {
 }
-
-// class UserEntry {
-//   id: number;
-//   name: string;
-//   family_name: string;
-//   email: string;
-//   password: string;
-//   role: string;
-
-//   constructor(
-//     id: number,
-//     name: string,
-//     family_name: string,
-//     email: string,
-//     password: string,
-//     basket: string,
-//     role: string,
-//   ) {
-//     this.id = id;
-//     this.name = name;
-//     this.family_name = family_name;
-//     this.email = email;
-//     this.password = password;
-//     this.role = role;
-//   }
-// }
-
