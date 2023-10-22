@@ -24,7 +24,7 @@ class Register {
     @PostMapping("/register")
     fun greetingSubmit(@ModelAttribute registerData : RegisterDTO, model: Model): String {
         // verifie email
-        if (registerData.email == "a") { // Debug TODO
+        if (repository.findByEmail(registerData.email) != null) { // Debug TODO
             model.addAttribute("error", "Erreur : Email déjà existant")
             model.addAttribute("loginDTO", LoginDTO()) // debug
             // Return error
