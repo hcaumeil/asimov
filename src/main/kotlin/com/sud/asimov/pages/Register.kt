@@ -23,17 +23,17 @@ class Register {
 
     @PostMapping("/register")
     fun greetingSubmit(@ModelAttribute registerData : RegisterDTO, model: Model): String {
+        model.addAttribute("registerDTO", RegisterDTO())
+
         // verifie email
-        if (repository.findByEmail(registerData.email) != null) { // Debug TODO
+        if (repository.findByEmail(registerData.email) != null) {
             model.addAttribute("error", "Erreur : Email déjà existant")
-            model.addAttribute("loginDTO", LoginDTO()) // debug
             // Return error
             return "register"
         }
 
         if (registerData.password1 != registerData.password2) {
             model.addAttribute("error", "Erreur : Mot de passe non identique")
-            model.addAttribute("registerDTO", RegisterDTO()) // debug
             // Return error
             return "register"
         }
