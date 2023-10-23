@@ -41,7 +41,8 @@
                 const handleIncrement = (i) => {
                     const q = document.getElementById('products-form-quantity' + i);
                     const s = document.getElementById('products-form-stock' + i);
-                    if (q.value < s.value) q.value++;
+                    console.log(s.value + "  " + q.value)
+                    if (parseInt(q.value) < parseInt(s.value)) q.value++;
                 }
 
                 const handleDecrement = (i) => {
