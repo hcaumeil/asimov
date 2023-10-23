@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
     <body>
-        <header th:fragment="header">
-            <div id="header-main">
-                <h1>Asimov</h1>
-                <h3>The electronics best friend</h3>
-            </div>
-            <nav id="header-nav-bar">
-                <div id="nav-bar-right">
-                    <a href="index.html" th:href="@{/}">Accueil</a>
-                    <a href="categories.html" th:href="@{/categories}">Catégories</a>
-                    <a href="contact.html" th:href="@{/contact}">Contact</a>
+        <header class="p-3 text-bg-dark" th:fragment="header">
+
+
+            <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" id="header-nav-bar">
+                <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" id="nav-bar-right">
+                    <a class="nav-link px-2 text-secondary" href="index.html" th:href="@{/}">Accueil</a>
+                    <a class="nav-link px-2 text-white" href="categories.html" th:href="@{/categories}">Catégories</a>
+                    <a class="nav-link px-2 text-white" href="contact.html" th:href="@{/contact}">Contact</a>
                 </div>
-                <div id="nav-bar-left">
-                    <a href="login.html" th:href="@{/login}">Connexion</a>
-                    <a href="register.html" th:href="@{/register}">Inscription</a>
+                <div class="text-end" id="nav-bar-left">
+                    <a class="btn btn-outline-light me-2" href="login.html" th:href="@{/login}">Connexion</a>
+                    <a class="btn btn-warning" href="register.html" th:href="@{/register}">Inscription</a>
                 </div>
             </nav>
+            <div  class="container text-center" id="header-main">
+                <h1 class="col">Asimov</h1>
+                <h3 class="col">The electronics best friend</h3>
+            </div>
         </header>
     </body>
 </html>
