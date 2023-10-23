@@ -10,34 +10,34 @@
     <div th:insert="~{header :: header}"></div>
     <h1 th:text="${category}">category</h1>
     <p th:text="${message}" class="info-message">message</p>
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="table-secondary">
         <tr>
-            <td>Photo</td>
-            <td>Réference</td>
-            <td>Description</td>
-            <td>Prix</td>
-            <td>Stock</td>
-            <td>Commande</td>
+            <th scope="col">Photo</th>
+            <th scope="col">Réference</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Commande</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
                 <input id="products-form-category" type="hidden" value="test" th:value="${category}"/>
                 <tr th:each="p, itemStat : ${products}">
                     <input id="products-form-count" type="hidden" th:value="${itemStat.count}"/>
                     <input th:attr="id='products-form-stock'+${itemStat.index}" type="hidden" th:value="${p.stock}"/>
-                    <td><img th:src="@{'/api/file/' + ${p.image.name}}"></td>
+                    <td class="card" style="height: 6rem;" ><img th:src="@{'/api/file/' + ${p.image.name}}"></td>
                     <td th:text="${p.reference}">reference</td>
                     <td th:text="${p.description}">description</td>
                     <td th:text="${p.price}">price</td>
                     <td th:text="${p.stock}">stock</td>
-                    <td>
-                        <button th:attr="id='increment-count'+${itemStat.index}" th:onclick="'handleIncrement('+${itemStat.index}+')'">+</button>
-                        <input th:attr="id='products-form-quantity'+${itemStat.index}" type="text" value="0"/>
-                        <button th:attr="id='decrement-count'+${itemStat.index}" th:onclick="'handleDecrement('+${itemStat.index}+')'">-</button>
+                    <td class="input-group ">
+                        <button class="btn btn-secondary" th:attr="id='increment-count'+${itemStat.index}" th:onclick="'handleIncrement('+${itemStat.index}+')'">+</button>
+                        <input class="form-control" th:attr="id='products-form-quantity'+${itemStat.index}" type="text" value="0"/>
+                        <button class="btn btn-secondary" th:attr="id='decrement-count'+${itemStat.index}" th:onclick="'handleDecrement('+${itemStat.index}+')'">-</button>
                     </td>
                 </tr>
-                <button onclick={processForm()}>Commander</button>
+
 
             <script>
                 const handleIncrement = (i) => {
@@ -75,5 +75,8 @@
             </script>
         </tbody>
     </table>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" onclick={processForm()}>Commander</button>
+    </div>
 </body>
 </html>
