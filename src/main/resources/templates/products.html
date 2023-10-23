@@ -8,8 +8,11 @@
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
+    <div class="container" style="padding-top: 4rem;">
     <h1 th:text="${category}">category</h1>
     <p th:text="${message}" class="info-message">message</p>
+    </div>
+    <div class="container">
     <table class="table">
         <thead class="table-secondary">
         <tr>
@@ -75,7 +78,8 @@
             </script>
         </tbody>
     </table>
-    <div class="d-flex justify-content-end">
+    </div>
+    <div class="container d-flex justify-content-end">
         <button class="btn btn-primary" onclick={processForm()}>Commander</button>
     </div>
 </body>
