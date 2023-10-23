@@ -13,12 +13,11 @@
             <div class="modal-content rounded-4 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
                     <h1 class="fw-bold mb-0 fs-2">Connexion</h1>
-                    <p th:text="${error}" class="error-message">error</p>
+                    <p th:text="${error}" class="error-message" id="login-form-error">error</p>
 
                 </div>
 
                 <div class="modal-body p-5 pt-0">
-                    <form id="login-form">
                         <div class="form-floating mb-3">
                             <input id="login-form-mail" class="form-control rounded-3" type="email" placeholder="Email"/>
                             <label for="login-form-mail">Email</label>
@@ -28,20 +27,27 @@
                             <label for="login-form-password">Mot de passe</label>
                         </div>
 
-                        <input class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" value="Soumettre">
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="login-form-submit" onclick="processForm()">Connexion</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="login-form-deconnection" onclick="handleDeconnection()">Déconnexion</button>
                         <hr class="my-4">
-
-                        <input class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="reset" value="Reinitialiser">
-                    </form>
                     <script>
-                        const form = document.getElementById('login-form');
-                        if (form.attachEvent) {
-                            form.attachEvent("submit", processForm);
+                        const errorBox = document.getElementById('login-form-error');
+                        const btnConnexion = document.getElementById('login-form-submit');
+                        const btnDeconnexion = document.getElementById('login-form-deconnection');
+                        if (sessionStorage.getItem("id") != null) {
+                            btnConnexion.style.display = "none"
                         } else {
-                            form.addEventListener("submit", processForm);
+                            btnDeconnexion.style.display = "none"
                         }
-                        function processForm(e) {
-                            if (e.preventDefault) e.preventDefault();
+
+                        const handleDeconnection = () => {
+                            sessionStorage.removeItem('id')
+                            btnDeconnexion.style.display = "none"
+                            btnConnexion.style.display = "inline-block"
+                            errorBox.innerHTML = "Vous avez été déconnecté"
+                        }
+
+                        const processForm = () => {
                             const email = document.getElementById('login-form-mail').value;
                             const password = document.getElementById("login-form-password").value;
 
@@ -53,8 +59,12 @@
                                 },
                                 body: JSON.stringify({email, password})
                             }).then(res => res.json()).then(res => {
-                                console.log(res)
                                 sessionStorage.setItem("id", res.id);
+                                btnConnexion.style.display = "none"
+                                btnDeconnexion.style.display = "inline-block"
+                                errorBox.innerHTML = "Vous êtes connecté"
+                            }).catch( _ => {
+                                errorBox.innerHTML = "Erreur: Email ou mot de passe incorrecte"
                             })
                             return false;
                         }
@@ -63,6 +73,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

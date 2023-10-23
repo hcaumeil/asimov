@@ -22,6 +22,7 @@ public class UserController {
         return repository.findAll();
 	}
 
+
     @PostMapping()
     fun post(@RequestBody user: User): User {    
         return repository.save(user);
