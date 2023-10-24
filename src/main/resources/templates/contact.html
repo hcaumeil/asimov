@@ -8,17 +8,18 @@
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
-    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin" style="height: 93vh;">
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-4 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
                     <h1 class="fw-bold mb-0 fs-2">Nous contacter</h1>
-                    <p th:text="${error}" class="error-message">error</p>
-                    <p th:text="${message}" class="info-message">message</p>
+
 
                 </div>
 
                 <div class="modal-body p-5 pt-0">
+                    <p th:text="${error}" class="error-message text-danger">error</p>
+                    <p th:text="${message}" class="info-message text-warning">message</p>
                     <form action="#" th:action="@{/contact}" th:object="${contactDTO}" method="post">
                         <div class="form-floating mb-3">
                             <input class="form-control rounded-3" type="text" placeholder="Nom" th:field="*{name}" />
@@ -32,7 +33,7 @@
                             <input id="message" class="form-control rounded-3" type="text" placeholder="Message" th:field="*{message}" />
                             <label for="message">Message</label>
                         </div>
-                        <input class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit" value="Soumettre" />
+                        <input class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit" value="Soumettre" />
                         <hr class="my-4">
 
                         <input class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3" type="reset" value="Reinitialiser" />

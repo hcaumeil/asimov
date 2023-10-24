@@ -8,16 +8,17 @@
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
-    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin" style="height: 93vh;">
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-4 shadow">
                 <div class="modal-header p-5 pb-4 border-bottom-0">
                     <h1 class="fw-bold mb-0 fs-2">Connexion</h1>
-                    <p th:text="${error}" class="error-message" id="login-form-error">error</p>
+
 
                 </div>
 
                 <div class="modal-body p-5 pt-0">
+                    <p th:text="${error}" class="error-message text-danger" id="login-form-error">error</p>
                         <div class="form-floating mb-3">
                             <input id="login-form-mail" class="form-control rounded-3" type="email" placeholder="Email"/>
                             <label for="login-form-mail">Email</label>
@@ -27,8 +28,8 @@
                             <label for="login-form-password">Mot de passe</label>
                         </div>
 
-                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="login-form-submit" onclick="processForm()">Connexion</button>
-                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" id="login-form-deconnection" onclick="handleDeconnection()">Déconnexion</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" id="login-form-submit" onclick="processForm()">Connexion</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-warning" id="login-form-deconnection" onclick="handleDeconnection()">Déconnexion</button>
 
                     <script>
                         const errorBox = document.getElementById('login-form-error');
