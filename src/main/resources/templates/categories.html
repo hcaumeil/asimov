@@ -9,13 +9,23 @@
 <body class="bg-body-secondary">
 
     <div th:insert="~{header :: header}"></div>
-    <div class="container" style="padding-top: 4rem;">
-        <div id="center-categories">
-            <p class="fs-4">Nos catégories : </p>
-            <ul th:each="c : ${categories}">
-                <li ><a class="btn btn-dark-emphasis" th:text="${c.name}" href="products.html" th:href="@{/products(categoryName=${c.name})}">name</a></li>
-            </ul>
+    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
+                    <h1 class="fw-bold mb-0 fs-2">Nos catégories :</h1>
+
+
+                </div>
+
+                <div class="modal-body p-5 pt-0">
+                    <ul th:each="c : ${categories}">
+                        <li class="d-flex justify-content-center" style="list-style: none;"><a style="width: 10vw;" class="btn btn-outline-secondary" th:text="${c.name}" href="products.html" th:href="@{/products(categoryName=${c.name})}">name</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+
 </body>
 </html>
