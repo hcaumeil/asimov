@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panier</title>
+</head>
+<body>
+    <div th:insert="~{header :: header}"></div>
+    <div class="container">
+        <table class="table">
+            <thead class="table-secondary">
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Réference</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Quantité</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="p, itemStat : ${products}">
+                <input id="products-form-count" type="hidden" th:value="${itemStat.count}"/>
+                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image.name}}"></td>
+                <td th:text="${p.reference}">reference</td>
+                <td th:text="${p.description}">description</td>
+                <td th:text="${p.price}">price</td>
+                <input th:attr="id='products-form-quantity'+${itemStat.index}" type="text" th:value="${p.quantity}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container d-flex justify-content-end" style="padding-bottom: 4rem;">
+        <button class="btn btn-dark" onclick={processForm()}>Commander</button>
+    </div>
+</body>
+</html>
