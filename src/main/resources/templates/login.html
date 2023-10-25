@@ -18,7 +18,8 @@
                 </div>
 
                 <div class="modal-body p-5 pt-0">
-                    <p th:text="${error}" class="error-message text-danger" id="login-form-error">error</p>
+                    <p class="error-message text-danger" id="login-form-error"></p>
+                    <p class="info-message text-warning" id="login-form-info"></p>
                         <div class="form-floating mb-3">
                             <input id="login-form-mail" class="form-control rounded-3" type="email" placeholder="Email"/>
                             <label for="login-form-mail">Email</label>
@@ -33,6 +34,7 @@
 
                     <script>
                         const errorBox = document.getElementById('login-form-error');
+                        const infoBox = document.getElementById('login-form-info');
                         const btnConnexion = document.getElementById('login-form-submit');
                         const btnDeconnexion = document.getElementById('login-form-deconnection');
                         if (sessionStorage.getItem("id") != null) {
@@ -45,7 +47,8 @@
                             sessionStorage.removeItem('id')
                             btnDeconnexion.style.display = "none"
                             btnConnexion.style.display = "inline-block"
-                            errorBox.innerHTML = "Vous avez été déconnecté"
+                            infoBox.innerHTML = "Vous avez été déconnecté"
+                            errorBox.innerHTML = ""
                         }
 
                         const processForm = () => {
@@ -55,6 +58,7 @@
                             fetch('http://localhost:8080/api/login', {
                                 method: 'POST',
                                 headers: {
+                                    'Access-Control-Allow-Origin':'*',
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 },
@@ -63,9 +67,11 @@
                                 sessionStorage.setItem("id", res.id);
                                 btnConnexion.style.display = "none"
                                 btnDeconnexion.style.display = "inline-block"
-                                errorBox.innerHTML = "Vous êtes connecté"
+                                infoBox.innerHTML = "Vous êtes connecté"
+                                errorBox.innerHTML = ""
                             }).catch( _ => {
                                 errorBox.innerHTML = "Erreur: Email ou mot de passe incorrecte"
+                                infoBox.innerHTML = ""
                             })
                             return false;
                         }
