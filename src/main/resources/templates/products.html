@@ -42,47 +42,52 @@
                         </div>
                     </td>
                 </tr>
-
-
-            <script>
-                const handleIncrement = (i) => {
-                    const q = document.getElementById('products-form-quantity' + i);
-                    const s = document.getElementById('products-form-stock' + i);
-                    console.log(s.value + "  " + q.value)
-                    if (parseInt(q.value) < parseInt(s.value)) q.value++;
-                }
-
-                const handleDecrement = (i) => {
-                    const q = document.getElementById('products-form-quantity' + i);
-                    if (q.value > 0) q.value--;
-                }
-
-                function processForm() {
-                    const categoryName = document.getElementById('products-form-category').value;
-                    const count = document.getElementById('products-form-count').value;
-
-                    let quantity = [];
-                    for(let i = 0; i < count; i++) {
-                        quantity[i] = document.getElementById("products-form-quantity" + i).value
-                    }
-
-                    fetch('http://localhost:8080/products/p', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({categoryName, quantity})
-                    }).then(res => res.ok).then(res => console.log(res))
-
-                    return false;
-                }
-            </script>
         </tbody>
     </table>
     </div>
     <div class="container d-flex justify-content-end" style="padding-bottom: 4rem;">
-        <button class="btn btn-dark" onclick={processForm()}>Ajouter au panier</button>
+        <p id="command-connect-message">Vous devez vous connecté pour ajouter des produits à votre panier.</p>
+        <button id="command-submit" class="btn btn-dark" onclick={processForm()}>Ajouter au panier</button>
+        <script>
+            const commandMessage = document.getElementById('command-connect-message');
+            const commandButton = document.getElementById('command-submit');
+            commandMessage.style.display = sessionStorage.getItem("id") === null ? "block" : "none"
+            commandButton.disabled = sessionStorage.getItem("id") === null
+        </script>
     </div>
 </body>
+<script>
+    const handleIncrement = (i) => {
+        const q = document.getElementById('products-form-quantity' + i);
+        const s = document.getElementById('products-form-stock' + i);
+        console.log(s.value + "  " + q.value)
+        if (parseInt(q.value) < parseInt(s.value)) q.value++;
+    }
+
+    const handleDecrement = (i) => {
+        const q = document.getElementById('products-form-quantity' + i);
+        if (q.value > 0) q.value--;
+    }
+
+    function processForm() {
+        const categoryName = document.getElementById('products-form-category').value;
+        const count = document.getElementById('products-form-count').value;
+
+        let quantity = [];
+        for(let i = 0; i < count; i++) {
+            quantity[i] = document.getElementById("products-form-quantity" + i).value
+        }
+
+        fetch('http://localhost:8080/products/p', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({categoryName, quantity})
+        }).then(res => res.ok).then(res => console.log(res))
+
+        return false;
+    }
+</script>
 </html>
