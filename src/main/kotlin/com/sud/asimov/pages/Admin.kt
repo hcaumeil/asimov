@@ -3,10 +3,16 @@ package com.sud.asimov.pages
 import com.sud.asimov.CategoryRepository
 import com.sud.asimov.ProductRepository
 import com.sud.asimov.UserRepository
+import com.sud.asimov.pages.dto.CategoryProductCommandDTO
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 
 @Controller
 class Admin {
@@ -27,5 +33,12 @@ class Admin {
         model.addAttribute("products", productsRepository.findAll())
         model.addAttribute("categories", categoryRepository.findAll())
         return "administration"
+    }
+
+    @PostMapping("/admin/delete/user")
+    @Transactional
+    fun userDeleteSubmit(@RequestBody userId : Long, model: Model): ResponseEntity<String> {
+        userRepository.deleteById(userId)
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Utilisateur supprimé")
     }
 }

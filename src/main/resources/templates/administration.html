@@ -28,6 +28,7 @@
                     <td th:text="${u.name}">surname</td>
                     <td th:text="${u.email}">email</td>
                     <td th:text="${u.role}">role</td>
+                    <td th:if="${u.role!='admin'}"><button th:onclick="'handleDeleteUser('+${u.id}+')'">Supprimmer</button></td>
                 </tr>
             </tbody>
         </table>
@@ -86,6 +87,20 @@
         usersList.style.display = "none"
         productsList.style.display = "none"
         categoriesList.style.display = "block"
+    }
+
+    const handleDeleteUser = (id) => {
+        console.log(id)
+        fetch('http://localhost:8080/admin/delete/user', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id)
+        }).then(res => res.ok).then(res => console.log(res))
+
+        return false;
     }
 </script>
 </html>
