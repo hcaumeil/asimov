@@ -41,4 +41,11 @@ class Admin {
         userRepository.deleteById(userId)
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Utilisateur supprimé")
     }
+
+    @PostMapping("/admin/delete/product")
+    @Transactional
+    fun productDeleteSubmit(@RequestBody productId : Long, model: Model): ResponseEntity<String> {
+        productsRepository.deleteById(productId)
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Produit supprimé")
+    }
 }

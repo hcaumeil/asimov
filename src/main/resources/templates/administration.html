@@ -52,6 +52,7 @@
                 <td th:text="${p.description}">description</td>
                 <td th:text="${p.price}">price</td>
                 <td th:text="${p.stock}">stock</td>
+                <td><button th:onclick="'handleDeleteProduct('+${p.id}+')'">Supprimmer</button></td>
             </tr>
             </tbody>
         </table>
@@ -99,7 +100,19 @@
             },
             body: JSON.stringify(id)
         }).then(res => res.ok).then(res => console.log(res))
+        return false;
+    }
 
+    const handleDeleteProduct = (id) => {
+        console.log(id)
+        fetch('http://localhost:8080/admin/delete/product', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id)
+        }).then(res => res.ok).then(res => console.log(res))
         return false;
     }
 </script>
