@@ -39,7 +39,7 @@ class Register {
         }
 
         // Inscription en BD
-        repository.save(User(null, registerData.name, registerData.family_name, registerData.email, registerData.password1))
+        repository.save(User(null, registerData.name, registerData.family_name, registerData.email, registerData.password1, "client"))
 
         model.addAttribute("message", "Vous êtes bien inscrit")
         return "register"

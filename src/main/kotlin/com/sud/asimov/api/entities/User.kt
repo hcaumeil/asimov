@@ -16,5 +16,6 @@ class User (
   public var name: String,
   public var family_name: String,
   public var email: String,
-  public var password: String) {
+  public var password: String,
+        public var role: String) {
 }
