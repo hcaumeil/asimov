@@ -5,6 +5,87 @@
     <title>Administration</title>
 </head>
 <body>
+<h1>Administration</h1>
+<div>
+    <button onclick="handleShowUsers()">Utilisateurs</button>
+    <button onclick="handleShowProducts()">Produits</button>
+    <button onclick="handleShowCategories()">Catégories</button>
+</div>
+<div>
+    <div id="admin-users-list">
+        <table class="table">
+            <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Rôle</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr th:each="u : ${users}">
+                    <td th:text="${u.family_name}">name</td>
+                    <td th:text="${u.name}">surname</td>
+                    <td th:text="${u.email}">email</td>
+                    <td>role</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
+    <div id="admin-products-list" class="">
+        <table class="table">
+            <thead class="table-secondary">
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Réference</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Stock</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="p : ${products}">
+                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image.name}}"></td>
+                <td th:text="${p.reference}">reference</td>
+                <td th:text="${p.description}">description</td>
+                <td th:text="${p.price}">price</td>
+                <td th:text="${p.stock}">stock</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="admin-categories-list">
+        <h2>Catégories</h2>
+        <ul th:each="c : ${categories}">
+            <li th:text="${c.name}">name</li>
+        </ul>
+    </div>
+</div>
 </body>
+<script>
+    const usersList = document.getElementById('admin-users-list');
+    const productsList = document.getElementById('admin-products-list');
+    const categoriesList = document.getElementById('admin-categories-list');
+
+    productsList.style.display = "none"
+    categoriesList.style.display = "none"
+
+    const handleShowUsers = () =>  {
+        usersList.style.display = "block"
+        productsList.style.display = "none"
+        categoriesList.style.display = "none"
+    }
+    const handleShowProducts = () =>  {
+        usersList.style.display = "none"
+        productsList.style.display = "block"
+        categoriesList.style.display = "none"
+    }
+    const handleShowCategories = () =>  {
+        usersList.style.display = "none"
+        productsList.style.display = "none"
+        categoriesList.style.display = "block"
+    }
+</script>
 </html>
