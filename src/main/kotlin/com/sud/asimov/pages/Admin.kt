@@ -1,8 +1,7 @@
 package com.sud.asimov.pages
 
-import com.sud.asimov.CategoryRepository
-import com.sud.asimov.ProductRepository
-import com.sud.asimov.UserRepository
+import com.sud.asimov.*
+import com.sud.asimov.api.cartproduct.CartProductRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -12,6 +11,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import java.util.*
 
 @Controller
 class Admin {
@@ -23,6 +23,9 @@ class Admin {
 
     @Autowired
     lateinit var productsRepository : ProductRepository;
+
+    @Autowired
+    lateinit var cartProductsRepository : CartProductRepository;
     @GetMapping("/admin")
     fun admin(model : Model) : String {
         // Check creditials
@@ -46,6 +49,12 @@ class Admin {
         return "administration :: #admin-products-list"
     }
 
+    @GetMapping("/admin/fragment/categories")
+    fun showCategoriesPart(model : Model) : String {
+        model.addAttribute("categories", categoryRepository.findAll())
+        return "administration :: #admin-categories-list"
+    }
+
     @PostMapping("/admin/delete/user")
     @Transactional
     fun userDeleteSubmit(@RequestBody userId : Long, model: Model): ResponseEntity<String> {
@@ -58,5 +67,19 @@ class Admin {
     fun productDeleteSubmit(@RequestBody productId : Long, model: Model): ResponseEntity<String> {
         productsRepository.deleteById(productId)
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Produit supprimé")
+    }
+
+    @PostMapping("/admin/delete/category")
+    @Transactional
+    fun categoryDeleteSubmit(@RequestBody categoryName: String, model: Model): ResponseEntity<String> {
+        val name = categoryName.subSequence(1 until categoryName.length-1).toString()
+        val lp = productsRepository.findByCategory(Category(name))
+        lp.forEach(action = {
+            it.id?.let { it1 ->
+                cartProductsRepository.deleteCartProductByProductId(it1)
+                productsRepository.deleteById(it1) }
+        })
+        categoryRepository.deleteById(name)
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Categorie supprimé")
     }
 }

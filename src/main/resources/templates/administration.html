@@ -63,6 +63,7 @@
         <h2>Catégories</h2>
         <ul th:each="c : ${categories}">
             <li th:text="${c.name}">name</li>
+            <td><button th:data-name="${c.name}" onclick="handleDeleteCategory(this.getAttribute('data-name'))">Supprimmer</button></td>
         </ul>
     </div>
 </div>
@@ -134,6 +135,22 @@
         return false;
     }
 
+    const handleDeleteCategory = (name) => {
+        console.log(name)
+        fetch('http://localhost:8080/admin/delete/category', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(name)
+        }).then(res => res.ok).then(res => {
+            console.log(res)
+            updateEventCategories()
+        })
+        return false;
+    }
+
     function updateEventUser() {
         $.get("/admin/fragment/user").done(function(fragment) { // get from controller
             $("#admin-users-list").replaceWith(fragment); // update snippet of page
@@ -146,5 +163,10 @@
         });
     }
 
+    function updateEventCategories() {
+        $.get("/admin/fragment/categories").done(function(fragment) { // get from controller
+            $("#admin-categories-list").replaceWith(fragment); // update snippet of page
+        });
+    }
 </script>
 </html>
