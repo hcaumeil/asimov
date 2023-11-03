@@ -75,7 +75,7 @@
             <label for="add-product-form-reference">Référence</label>
             <button onclick="handleAddProduct()">Ajouter</button>
             <script>
-                const handleAddProduct = () => {
+                function handleAddProduct() {
                     const name = document.getElementById('add-product-form-name').value;
                     const category = document.getElementById('add-product-form-categories').value;
                     const price = document.getElementById('add-product-form-price').value;
@@ -92,6 +92,7 @@
                         body: JSON.stringify({name, category, price, description, stock, reference})
                     }).then(res => res.ok).then(res => {
                         console.log(res)
+                        updateEventProduct()
                     })
                     return false;
                 }
