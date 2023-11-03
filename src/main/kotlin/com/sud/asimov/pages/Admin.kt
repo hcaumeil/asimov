@@ -2,6 +2,7 @@ package com.sud.asimov.pages
 
 import com.sud.asimov.*
 import com.sud.asimov.api.cartproduct.CartProductRepository
+import com.sud.asimov.pages.dto.ProductAddDTO
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -11,7 +12,6 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import java.util.*
 
 @Controller
 class Admin {
@@ -81,5 +81,19 @@ class Admin {
         })
         categoryRepository.deleteById(name)
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Categorie supprimé")
+    }
+
+    @PostMapping("/admin/add/product")
+    @Transactional
+    fun productAddSubmit(@RequestBody product : ProductAddDTO, model: Model): ResponseEntity<String> {
+        productsRepository.save(Product(null,
+                product.name,
+                Category(product.category),
+                product.price,
+                product.description,
+                product.stock,
+                product.reference,
+                null)) // TODO: Change by file
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Produit ajouté")
     }
 }

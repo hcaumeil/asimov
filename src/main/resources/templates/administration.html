@@ -48,7 +48,7 @@
             </thead>
             <tbody class="table-group-divider">
             <tr th:each="p : ${products}">
-                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image.name}}"></td>
+                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image?.name}}"></td>
                 <td th:text="${p.reference}">reference</td>
                 <td th:text="${p.description}">description</td>
                 <td th:text="${p.price}">price</td>
@@ -57,6 +57,46 @@
             </tr>
             </tbody>
         </table>
+        <div>
+            <h2>Ajouter un produit</h2>
+            <input id="add-product-form-name" type="text" placeholder="Nom"/>
+            <label for="add-product-form-name">Nom</label>
+            <select id="add-product-form-categories">
+                <option th:each="c : ${categories}" th:value="${c.name}" th:text="${c.name}"></option>
+            </select>
+            <label for="add-product-form-categories">Catégories</label>
+            <input id="add-product-form-price" type="number" placeholder="Prix"/>
+            <label for="add-product-form-price">Prix</label>
+            <input id="add-product-form-description" type="text" placeholder="Description"/>
+            <label for="add-product-form-description">Description</label>
+            <input id="add-product-form-stock" type="text" placeholder="Stock"/>
+            <label for="add-product-form-stock">Stock</label>
+            <input id="add-product-form-reference" type="text" placeholder="Référence"/>
+            <label for="add-product-form-reference">Référence</label>
+            <button onclick="handleAddProduct()">Ajouter</button>
+            <script>
+                const handleAddProduct = () => {
+                    const name = document.getElementById('add-product-form-name').value;
+                    const category = document.getElementById('add-product-form-categories').value;
+                    const price = document.getElementById('add-product-form-price').value;
+                    const description = document.getElementById('add-product-form-description').value;
+                    const stock = document.getElementById('add-product-form-stock').value;
+                    const reference = document.getElementById('add-product-form-reference').value;
+                    console.log(JSON.stringify({name, category, price, description, stock, reference}))
+                    fetch('http://localhost:8080/admin/add/product', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({name, category, price, description, stock, reference})
+                    }).then(res => res.ok).then(res => {
+                        console.log(res)
+                    })
+                    return false;
+                }
+            </script>
+        </div>
     </div>
 
     <div id="admin-categories-list">
