@@ -12,6 +12,13 @@
     <h1 th:text="${category}">category</h1>
     <p th:text="${message}" class="info-message">message</p>
     </div>
+    <div>
+        <p id="command-connect-message">Vous devez vous connecté pour ajouter des produits à votre panier.</p>
+        <script>
+            const commandMessage = document.getElementById('command-connect-message');
+            commandMessage.style.display = sessionStorage.getItem("id") === null ? "block" : "none"
+        </script>
+    </div>
     <div class="container">
     <table class="table">
         <thead class="table-secondary">
@@ -39,21 +46,18 @@
                             <button class="btn btn-secondary" th:attr="id='increment-count'+${itemStat.index}" th:onclick="'handleIncrement('+${itemStat.index}+')'">+</button>
                             <input class="form-control" th:attr="id='products-form-quantity'+${itemStat.index}" type="text" value="0"/>
                             <button class="btn btn-secondary" th:attr="id='decrement-count'+${itemStat.index}" th:onclick="'handleDecrement('+${itemStat.index}+')'">-</button>
+                            <button class="btn btn-dark" th:attr="id='command-submit'+${itemStat.index}" th:onclick="'processForm('+${p.id}+','+ ${itemStat.index}+')'">Ajouter au panier</button>
+                            <script th:inline="javascript">
+                                {
+                                    let commandSubmit = document.getElementById('command-submit'+[[${itemStat.index}]]);
+                                    commandSubmit.disabled = sessionStorage.getItem("id") === null
+                                }
+                            </script>
                         </div>
                     </td>
                 </tr>
         </tbody>
     </table>
-    </div>
-    <div class="container d-flex justify-content-end" style="padding-bottom: 4rem;">
-        <p id="command-connect-message">Vous devez vous connecté pour ajouter des produits à votre panier.</p>
-        <button id="command-submit" class="btn btn-dark" onclick={processForm()}>Ajouter au panier</button>
-        <script>
-            const commandMessage = document.getElementById('command-connect-message');
-            const commandButton = document.getElementById('command-submit');
-            commandMessage.style.display = sessionStorage.getItem("id") === null ? "block" : "none"
-            commandButton.disabled = sessionStorage.getItem("id") === null
-        </script>
     </div>
 </body>
 <script>
@@ -69,22 +73,17 @@
         if (q.value > 0) q.value--;
     }
 
-    function processForm() {
-        const categoryName = document.getElementById('products-form-category').value;
-        const count = document.getElementById('products-form-count').value;
+    function processForm(productId, index) {
+        let quantity = document.getElementById("products-form-quantity" + index).value
+        let userId = sessionStorage.getItem("id")
 
-        let quantity = [];
-        for(let i = 0; i < count; i++) {
-            quantity[i] = document.getElementById("products-form-quantity" + i).value
-        }
-
-        fetch('http://localhost:8080/products/p', {
+        fetch('http://localhost:8080/products/add-cart', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({categoryName, quantity})
+            body: JSON.stringify({userId, productId, quantity})
         }).then(res => res.ok).then(res => console.log(res))
 
         return false;

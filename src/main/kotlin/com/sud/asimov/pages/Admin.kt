@@ -3,7 +3,6 @@ package com.sud.asimov.pages
 import com.sud.asimov.CategoryRepository
 import com.sud.asimov.ProductRepository
 import com.sud.asimov.UserRepository
-import com.sud.asimov.pages.dto.CategoryProductCommandDTO
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType

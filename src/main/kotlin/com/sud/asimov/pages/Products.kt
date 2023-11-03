@@ -3,8 +3,7 @@ package com.sud.asimov.pages
 import com.sud.asimov.Category
 import com.sud.asimov.Product
 import com.sud.asimov.ProductRepository
-import com.sud.asimov.pages.dto.CategoryProductCommandDTO
-import com.sud.asimov.pages.dto.ContactDTO
+import com.sud.asimov.pages.dto.ProductCommandDTO
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -22,19 +21,15 @@ class Products {
     fun products(@RequestParam categoryName : String, model : Model): String {
         // Get all products from category
         val products : List<Product> = repository.findByCategory(Category(categoryName))
-
-        val form = CategoryProductCommandDTO(categoryName, MutableList(products.indices.last + 1) {0})
-        model.addAttribute("categoryProductCommandDTO", form)
-
         // Set the model with data
         model.addAttribute("category", categoryName)
         model.addAttribute("products", products)
         return "products"
     }
 
-    @PostMapping("/products/p")
+    @PostMapping("/products/add-cart")
     @Transactional
-    fun categoryProductCommandSubmit(@RequestBody categoryProductCommandData : CategoryProductCommandDTO, model: Model): ResponseEntity<String> {
+    fun productCommandSubmit(@RequestBody productCommandData : ProductCommandDTO, model: Model): ResponseEntity<String> {
         // Traitement
         // Erreur inattendu ?
         //model.addAttribute("message", "Erreur : Un problème serveur est survenu")
