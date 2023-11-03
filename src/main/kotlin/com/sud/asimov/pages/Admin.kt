@@ -35,6 +35,18 @@ class Admin {
         return "administration"
     }
 
+    @GetMapping("/admin/fragment/user")
+    fun showUserPart(model : Model) : String {
+        model.addAttribute("users", userRepository.findAll())
+        return "administration :: #admin-users-list"
+    }
+
+    @GetMapping("/admin/fragment/product")
+    fun showProductPart(model : Model) : String {
+        model.addAttribute("products", productsRepository.findAll())
+        return "administration :: #admin-products-list"
+    }
+
     @PostMapping("/admin/delete/user")
     @Transactional
     fun userDeleteSubmit(@RequestBody userId : Long, model: Model): ResponseEntity<String> {

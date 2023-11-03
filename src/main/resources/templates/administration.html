@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Administration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <h1>Administration</h1>
@@ -67,7 +68,6 @@
 </div>
 </body>
 <script>
-    const usersList = document.getElementById('admin-users-list');
     const productsList = document.getElementById('admin-products-list');
     const categoriesList = document.getElementById('admin-categories-list');
 
@@ -75,16 +75,28 @@
     categoriesList.style.display = "none"
 
     const handleShowUsers = () =>  {
+        // Need local reference for dynamique reload fragments
+        const usersList = document.getElementById('admin-users-list');
+        const productsList = document.getElementById('admin-products-list');
+        const categoriesList = document.getElementById('admin-categories-list');
         usersList.style.display = "block"
         productsList.style.display = "none"
         categoriesList.style.display = "none"
     }
     const handleShowProducts = () =>  {
+        // Need local reference for dynamique reload fragments
+        const usersList = document.getElementById('admin-users-list');
+        const productsList = document.getElementById('admin-products-list');
+        const categoriesList = document.getElementById('admin-categories-list');
         usersList.style.display = "none"
         productsList.style.display = "block"
         categoriesList.style.display = "none"
     }
     const handleShowCategories = () =>  {
+        // Need local reference for dynamique reload fragments
+        const usersList = document.getElementById('admin-users-list');
+        const productsList = document.getElementById('admin-products-list');
+        const categoriesList = document.getElementById('admin-categories-list');
         usersList.style.display = "none"
         productsList.style.display = "none"
         categoriesList.style.display = "block"
@@ -99,7 +111,10 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(id)
-        }).then(res => res.ok).then(res => console.log(res))
+        }).then(res => res.ok).then(res => {
+            console.log(res)
+            updateEventUser()
+        })
         return false;
     }
 
@@ -112,8 +127,24 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(id)
-        }).then(res => res.ok).then(res => console.log(res))
+        }).then(res => res.ok).then(res => {
+            console.log(res)
+            updateEventProduct()
+        })
         return false;
     }
+
+    function updateEventUser() {
+        $.get("/admin/fragment/user").done(function(fragment) { // get from controller
+            $("#admin-users-list").replaceWith(fragment); // update snippet of page
+        });
+    }
+
+    function updateEventProduct() {
+        $.get("/admin/fragment/product").done(function(fragment) { // get from controller
+            $("#admin-products-list").replaceWith(fragment); // update snippet of page
+        });
+    }
+
 </script>
 </html>
