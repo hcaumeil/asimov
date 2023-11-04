@@ -12,6 +12,8 @@
                 <div class="nav col me-lg-auto mb-2 justify-content-center mb-md-0" id="nav-bar-right">
                     <a class="nav-link px-2 fs-4 text-warning" href="index.html" th:href="@{/}">Accueil</a>
                     <a class="nav-link px-2 fs-4 text-white" href="categories.html" th:href="@{/categories}">Catégories</a>
+                    <a class="nav-link px-2 fs-4 text-white" href="cart.html" th:href="@{/cart}">Panier</a>
+                    <a id="btn-admin" class="nav-link px-2 fs-4 text-white" href="administration.html" th:href="@{/admin}">Administration</a>
                     <a class="nav-link px-2 fs-4 text-white" href="contact.html" th:href="@{/contact}">Contact</a>
                 </div>
                 <div class="col text-end" id="nav-bar-left">
@@ -19,7 +21,10 @@
                     <a class="btn btn-warning" href="register.html" th:href="@{/register}">Inscription</a>
                 </div>
             </nav>
-
+            <script>
+                const btnAdmin = document.getElementById("btn-admin")
+                btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "block"
+            </script>
         </header>
     </body>
 </html>

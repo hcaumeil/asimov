@@ -65,6 +65,7 @@
                                 body: JSON.stringify({email, password})
                             }).then(res => res.json()).then(res => {
                                 sessionStorage.setItem("id", res.id);
+                                sessionStorage.setItem("role", res.role);
                                 btnConnexion.style.display = "none"
                                 btnDeconnexion.style.display = "inline-block"
                                 infoBox.innerHTML = "Vous êtes connecté"

@@ -6,13 +6,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-<h1>Administration</h1>
-<div>
-    <button onclick="handleShowUsers()">Utilisateurs</button>
-    <button onclick="handleShowProducts()">Produits</button>
-    <button onclick="handleShowCategories()">Catégories</button>
-</div>
-<div>
+    <div th:insert="~{header :: header}"></div>
+    <h1>Administration</h1>
+    <div>
+        <button onclick="handleShowUsers()">Utilisateurs</button>
+        <button onclick="handleShowProducts()">Produits</button>
+        <button onclick="handleShowCategories()">Catégories</button>
+    </div>
+    <div>
     <div id="admin-users-list">
         <table class="table">
             <thead class="table-secondary">

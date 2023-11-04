@@ -18,6 +18,7 @@ public class UserDetails(
     public var name : String,
     public var family_name : String,
     public var email : String,
+        var role : String
 ) {}
 
 // class User (
@@ -40,7 +41,7 @@ public class LoginController {
         var user : User? = null;
 
         for (u in repository.findAll()) {
-            if (u.email == body.email) {
+            if (u.email == body.email && u.password == body.password) {
                 user = u;
             }
         }
@@ -53,6 +54,6 @@ public class LoginController {
     }
 
     fun user_to_details(u : User) : UserDetails {
-        return UserDetails(u.id!!, u.name, u.family_name, u.email);
+        return UserDetails(u.id!!, u.name, u.family_name, u.email, u.role);
     }
 }
