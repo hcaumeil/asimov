@@ -2,7 +2,9 @@ package com.sud.asimov.pages
 
 import com.sud.asimov.*
 import com.sud.asimov.api.cartproduct.CartProductRepository
+import com.sud.asimov.pages.dto.CategoryAddDTO
 import com.sud.asimov.pages.dto.ProductAddDTO
+import com.sud.asimov.pages.dto.UserAddDTO
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -84,6 +86,13 @@ class Admin {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Categorie supprimé")
     }
 
+    @PostMapping("/admin/add/user")
+    @Transactional
+    fun userAddSubmit(@RequestBody user : UserAddDTO, model: Model): ResponseEntity<String> {
+        userRepository.save(User(null, user.name, user.family_name, user.email, user.password, user.role))
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Utilisateur ajouté")
+    }
+
     @PostMapping("/admin/add/product")
     @Transactional
     fun productAddSubmit(@RequestBody product : ProductAddDTO, model: Model): ResponseEntity<String> {
@@ -96,5 +105,12 @@ class Admin {
                 product.reference,
                 null)) // TODO: Change by file
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Produit ajouté")
+    }
+
+    @PostMapping("/admin/add/category")
+    @Transactional
+    fun categoryAddSubmit(@RequestBody category: CategoryAddDTO, model: Model): ResponseEntity<String> {
+        categoryRepository.save(Category(category.name))
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Catégorie ajouté")
     }
 }

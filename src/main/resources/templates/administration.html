@@ -33,6 +33,47 @@
                 </tr>
             </tbody>
         </table>
+
+        <div>
+            <h2>Ajouter un utilisateur</h2>
+            <input id="add-user-form-family-name" type="text" placeholder="Nom"/>
+            <label for="add-user-form-family-name">Nom</label>
+            <input id="add-user-form-name" type="text" placeholder="Prénom"/>
+            <label for="add-user-form-name">Prénom</label>
+            <input id="add-user-form-mail" type="text" placeholder="Email"/>
+            <label for="add-user-form-mail">Email</label>
+            <input id="add-user-form-password" type="password" placeholder="Mot de passe"/>
+            <label for="add-user-form-password">Mot de passe</label>
+            <select id="add-user-form-role">
+                <option value="admin">Administrateur</option>
+                <option value="merchant">Marchand</option>
+                <option value="client">Client</option>
+            </select>
+            <label for="add-user-form-role">Rôle</label>
+            <button onclick="handleAddUser()">Ajouter</button>
+            <script>
+                function handleAddUser() {
+                    const name = document.getElementById('add-user-form-name').value;
+                    const familyName = document.getElementById('add-user-form-family-name').value;
+                    const email = document.getElementById('add-user-form-mail').value;
+                    const password = document.getElementById('add-user-form-password').value;
+                    const role = document.getElementById('add-user-form-role').value;
+
+                    fetch('http://localhost:8080/admin/add/user', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({"family_name": familyName, name, email, password, role})
+                    }).then(res => res.ok).then(res => {
+                        console.log(res)
+                        updateEventUser()
+                    })
+                    return false;
+                }
+            </script>
+        </div>
     </div>
 
     <div id="admin-products-list" class="">
@@ -123,6 +164,29 @@
             <li th:text="${c.name}">name</li>
             <td><button th:data-name="${c.name}" onclick="handleDeleteCategory(this.getAttribute('data-name'))">Supprimmer</button></td>
         </ul>
+        <div>
+            <h2>Ajouter une catégorie</h2>
+            <input id="add-category-form-name" type="text" placeholder="Nom"/>
+            <label for="add-category-form-name">Nom</label>
+            <button onclick="handleAddCategory()">Ajouter</button>
+            <script>
+                function handleAddCategory() {
+                    const name = document.getElementById('add-category-form-name').value;
+                    fetch('http://localhost:8080/admin/add/category', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({name})
+                    }).then(res => res.ok).then(res => {
+                        console.log(res)
+                        updateEventCategories()
+                    })
+                    return false;
+                }
+            </script>
+        </div>
     </div>
 </div>
 </body>
