@@ -46,6 +46,7 @@ class Admin {
     @GetMapping("/admin/fragment/product")
     fun showProductPart(model : Model) : String {
         model.addAttribute("products", productsRepository.findAll())
+        model.addAttribute("categories", categoryRepository.findAll())
         return "administration :: #admin-products-list"
     }
 

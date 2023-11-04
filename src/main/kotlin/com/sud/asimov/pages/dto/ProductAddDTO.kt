@@ -9,7 +9,6 @@ class ProductAddDTO(
         var price: Float,
         var description: String?,
         var stock: Int,
-        var reference: String,
-        // Add file
+        var reference: String
 ) {
 }
