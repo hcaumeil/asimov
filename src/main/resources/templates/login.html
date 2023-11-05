@@ -56,9 +56,10 @@
                             btnHeaderLogin.style.display = "inline-block"
                             btnHeaderRegister.style.display = "inline-block"
                             document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
+                            document.getElementById("header-btn-profile").href = "/profile/"+sessionStorage.getItem("id")
                             btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
-                            btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
-                            btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
+                            btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
+                            btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
                         }
 
                         const processForm = () => {
@@ -85,9 +86,10 @@
                                 btnHeaderLogin.style.display = "none"
                                 btnHeaderRegister.style.display = "none"
                                 document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
+                                document.getElementById("header-btn-profile").href = "/profile/"+sessionStorage.getItem("id")
                                 btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
-                                btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
-                                btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
+                                btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
+                                btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
                             }).catch( _ => {
                                 errorBox.innerHTML = "Erreur: Email ou mot de passe incorrecte"
                                 infoBox.innerHTML = ""

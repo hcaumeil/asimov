@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+</head>
+<body>
+<div th:insert="~{header :: header}"></div>
+<div class="container" style="padding-top: 4rem;">
+    <h1>Bonjour <span th:text="${user.name}"></span></h1>
+</div>
+<div id="user-command-list" class="">
+    <table class="table">
+        <thead class="table-secondary">
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Produits</th>
+            <th scope="col">Adresse de livraison</th>
+            <th scope="col">Pays</th>
+            <th scope="col">ZIP Code</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="c : ${commands}">
+            <td th:text="${c.family_name}">name</td>
+            <td th:text="${c.name}">surname</td>
+            <table>
+                <tr th:each="p : ${c.products}">
+                    <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.product.image}}"></td>
+                    <td th:text="${p.product.name}">name</td>
+                    <td th:text="${p.quantity}">quantity</td>
+                </tr>
+            </table>
+            <td th:text="${c.address}">adress</td>
+            <td th:text="${c.country}">country</td>
+            <td th:text="${c.zip_code}">zip</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

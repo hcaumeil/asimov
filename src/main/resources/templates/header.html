@@ -21,7 +21,7 @@
 
                     <button class="btn btn-warning" id="header-btn-deconnection" onclick="handleHeaderDeconnection()">Déconnexion</button>
                     <a id="btn-admin" class="btn btn-outline-light" href="administration.html" th:href="@{/admin}">Administration</a>
-                    <a id="header-btn-profil" class="btn btn-outline-light" href="profil.html" th:href="@{/profil}">Profil</a>
+                    <a id="header-btn-profile" class="btn btn-outline-light">Profil</a>
                     <a id="header-btn-merchant" class="btn btn-outline-light" href="merchant.html" th:href="@{/merchant}">Marchand</a>
                 </div>
             </nav>
@@ -30,12 +30,12 @@
                 const btnHeaderLogin = document.getElementById("header-btn-login")
                 const btnHeaderRegister = document.getElementById("header-btn-register")
                 const btnHeaderDeconnexion = document.getElementById("header-btn-deconnection")
-                const btnHeaderProfil = document.getElementById("header-btn-profil")
+                const btnHeaderProfil = document.getElementById("header-btn-profile")
                 const btnHeaderMerchant = document.getElementById("header-btn-merchant")
 
                 btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
-                btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
-                btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
+                btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
+                btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
 
                 if(sessionStorage.getItem("id")) {
                     btnHeaderDeconnexion.style.display = "inline-block"
@@ -43,6 +43,7 @@
                     btnHeaderLogin.style.display = "none"
                     btnHeaderRegister.style.display = "none"
                     document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
+                    document.getElementById("header-btn-profile").href = "/profile/"+sessionStorage.getItem("id")
                 } else {
                     btnHeaderDeconnexion.style.display = "none"
                     btnHeaderLogin.style.display = "inline-block"
@@ -57,9 +58,10 @@
                     btnHeaderLogin.style.display = "inline-block"
                     btnHeaderRegister.style.display = "inline-block"
                     document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
+                    document.getElementById("header-btn-profile").href = "/profile/"+sessionStorage.getItem("id")
                     btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
-                    btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
-                    btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
+                    btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
+                    btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
                 }
             </script>
         </header>

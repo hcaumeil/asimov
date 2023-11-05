@@ -7,4 +7,5 @@ import com.sud.asimov.Command;
 @Repository
 interface CommandRepository : JpaRepository<Command, Long> {
   fun findByUser(user: User): List<Command>
+  fun findByUserId(userId: Long): List<Command>
 }
