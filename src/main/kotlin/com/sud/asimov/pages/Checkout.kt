@@ -24,14 +24,17 @@ class Checkout {
     fun checkout(@PathVariable("id") id: Long, model : Model) : String {
         val lcp = repository.findAllByUserId(id)
         var total = 0.0
+        var nb = 0;
         val it = lcp.listIterator()
         while (it.hasNext()) {
             val current = it.next()
             if (current != null) {
                 total += current.quantity * current.product.price
+                nb++
             }
         }
         model.addAttribute("items", lcp)
+        model.addAttribute("nbProduct", nb)
         model.addAttribute("total", DecimalFormat("#.##")
                 .apply { roundingMode = RoundingMode.FLOOR }
                 .format(total))
