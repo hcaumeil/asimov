@@ -48,6 +48,7 @@
                     btnHeaderLogin.style.display = "inline-block"
                     btnHeaderRegister.style.display = "inline-block"
                     document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
+                    btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "block"
                 }
             </script>
         </header>
