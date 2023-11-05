@@ -19,6 +19,7 @@ class Command(
         var address: String,
         var country: String,
         var zip_code: String,
+        var price: Float,
 ) {
 }
 
