@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body class="bg-body-secondary">
 <div th:insert="~{header :: header}"></div>
 <div class="container" style="padding-top: 4rem;">
     <h1>Bonjour <span th:text="${user.name}"></span></h1>
@@ -29,13 +29,14 @@
         <tr th:each="c : ${commands}">
             <td th:text="${c.family_name}">name</td>
             <td th:text="${c.name}">surname</td>
-            <table>
+            <td><table>
                 <tr th:each="p : ${c.products}">
-                    <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.product.image}}"></td>
                     <td th:text="${p.product.name}">name</td>
+                    <td>x</td>
                     <td th:text="${p.quantity}">quantity</td>
                 </tr>
             </table>
+            </td>
             <td th:text="${c.address}">adress</td>
             <td th:text="${c.country}">country</td>
             <td th:text="${c.zip_code}">zip</td>
