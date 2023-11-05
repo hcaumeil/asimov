@@ -51,6 +51,10 @@
                             btnConnexion.style.display = "inline-block"
                             infoBox.innerHTML = "Vous avez été déconnecté"
                             errorBox.innerHTML = ""
+
+                            btnHeaderDeconnexion.style.display = "none"
+                            btnHeaderLogin.style.display = "inline-block"
+                            btnHeaderRegister.style.display = "inline-block"
                         }
 
                         const processForm = () => {
@@ -72,12 +76,19 @@
                                 btnDeconnexion.style.display = "inline-block"
                                 infoBox.innerHTML = "Vous êtes connecté"
                                 errorBox.innerHTML = ""
+
+                                btnHeaderDeconnexion.style.display = "inline-block"
+                                btnHeaderLogin.style.display = "none"
+                                btnHeaderRegister.style.display = "none"
+
                             }).catch( _ => {
                                 errorBox.innerHTML = "Erreur: Email ou mot de passe incorrecte"
                                 infoBox.innerHTML = ""
                             })
                             return false;
                         }
+
+                        btnHeaderDeconnexion.addEventListener("click", handleDeconnection)
                     </script>
                 </div>
             </div>
