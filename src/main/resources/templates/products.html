@@ -12,8 +12,8 @@
     <h1 th:text="${category}">category</h1>
     <p th:text="${message}" class="info-message">message</p>
     </div>
-    <div>
-        <p id="command-connect-message">Vous devez vous connecté pour ajouter des produits à votre panier.</p>
+    <div style="display: flex; justify-content: center;">
+        <p id="command-connect-message">Vous devez vous connectez pour ajouter des produits à votre panier.</p>
         <script>
             const commandMessage = document.getElementById('command-connect-message');
             commandMessage.style.display = sessionStorage.getItem("id") === null ? "block" : "none"
