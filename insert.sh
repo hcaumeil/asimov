@@ -1,5 +1,7 @@
 curl -X POST -H "Content-Type: application/json" -d '{"name":"test","family_name":"test","email":"test@test","password":"test", "role":"client"}' localhost:8080/api/user
 curl -X POST -H "Content-Type: application/json" -d '{"name":"admin","family_name":"admin","email":"admin@admin","password":"admin", "role":"admin"}' localhost:8080/api/user
+curl -X POST -H "Content-Type: application/json" -d '{"name":"seller","family_name":"seller","email":"seller@seller","password":"seller", "role":"merchant"}' localhost:8080/api/user
+
 
 curl -X POST -H "Content-Type: application/json" -d '{"name": "DRAM"}' localhost:8080/api/category
 curl -X POST -H "Content-Type: application/json" -d '{"name":"EEPROM"}' localhost:8080/api/category
