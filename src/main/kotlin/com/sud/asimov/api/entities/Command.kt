@@ -1,7 +1,8 @@
-package com.sud.asimov.api.entities
+package com.sud.asimov
 
 import com.sud.asimov.Product
 import com.sud.asimov.User
+import com.sud.asimov.api.entities.CartProduct
 import jakarta.persistence.*
 
 @Entity
