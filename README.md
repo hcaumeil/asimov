@@ -7,11 +7,28 @@ d'une plateforme d'achat de matériels électroniques.
 
 En arrivant sur le site les pages suivantes sont accessibles : Accueil, categories, produits, contact, connexion, inscription
 
-Un compte client peut être accédé après la création d'un compte sur la page inscription ou via les identifiants d'un compte préinscrit comme suivant : email : test@test mot de passe : test sur la page connexion
-une fois connecté en tant que client, on peut ajouter des produits au panier, consulter le panier et finaliser la commande sûr la page checkout.
-Une autre page nommée profil permet d'accéder à l'historique des commandes passées
+Un compte client peut être accédé après la création d'un compte sur la page inscription ou via les identifiants d'un compte préinscrit comme suivant : 
+> email : test@test 
+> mot de passe : test
 
-Les identifiants suivants : seller@seller avec comme mot de passe seller, permettent d'accéder à un compte marchand, ce dernier a accés à la page marchand qui permet de supprimer ou d'ajouter de nouveaux produits sur le site.
+Une fois connecté en tant que client, on peut ajouter des produits au panier, consulter le panier et finaliser la commande sûr la page checkout.
+Une autre page nommée profil permet d'accéder à l'historique des commandes passées.
 
-Enfin avec admin@admin et en mot de passe admin, on peut se connecter à un compte admin qui a access à un panneau d'administration permettant de supprimer ou d'ajouter des produits, des categories et des utilisateurs avec les roles souhaités
+Les identifiants suivants : 
+> email : seller@seller 
+> mot de passe : seller
+
+permettent d'accéder à un compte marchand. 
+Ce dernier a accés à la page marchand qui permet de supprimer ou d'ajouter de nouveaux produits sur le site.
+
+Enfin avec : 
+> email: admin@admin 
+> mot de passe : admin
+
+on peut se connecter à un compte admin qui a access à un panneau d'administration permettant de supprimer ou d'ajouter des produits, 
+des categories et des utilisateurs avec les roles souhaités.
+
+## Démarrer le projet
+
+
 
