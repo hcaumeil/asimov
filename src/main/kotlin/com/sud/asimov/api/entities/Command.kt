@@ -5,13 +5,13 @@ import com.sud.asimov.User
 import jakarta.persistence.*
 
 @Entity
-class CartProduct(
+class Command(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         public val id: Long? = null,
+        @OneToMany
+        var products: List<CartProduct>,
         @ManyToOne
         var user: User,
-        @ManyToOne
-        var product: Product,
-        var quantity : Long,
 ) {
 }
+
