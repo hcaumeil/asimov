@@ -21,6 +21,8 @@
                 <th scope="col">Description</th>
                 <th scope="col">Prix</th>
                 <th scope="col">Quantité</th>
+                <th scope="col"></th>
+
             </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -30,13 +32,13 @@
                 <td th:text="${i.product.description}">description</td>
                 <td th:text="${i.product.price}">price</td>
                 <td th:text="${i.quantity}">quantity</td>
-                <td><button th:onclick="'handleDeleteCartProduct('+${i.id}+')'">Supprimmer</button></td>
+                <td><button th:onclick="'handleDeleteCartProduct('+${i.id}+')'" class="btn btn-outline-secondary">Supprimmer</button></td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="container d-flex justify-content-end" style="padding-bottom: 4rem;">
-        <a id="btn-checkout" class="nav-link px-2 fs-4 text-white">Commander</a> <script>document.getElementById("btn-checkout").href = "/checkout/"+sessionStorage.getItem("id")</script>
+        <a id="btn-checkout" class="btn btn-secondary btn-lg">Commander</a> <script>document.getElementById("btn-checkout").href = "/checkout/"+sessionStorage.getItem("id")</script>
     </div>
     <script>
         function updateEventCartProduct() {
