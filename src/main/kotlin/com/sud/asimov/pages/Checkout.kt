@@ -40,7 +40,7 @@ class Checkout {
 
     @PostMapping("/checkout/order")
     @Transactional
-    fun orderSubmit(@RequestBody body: CommandDTO , model: Model): ResponseEntity<String> {
+    fun orderSubmit(@RequestBody body: CommandDTO, model: Model): ResponseEntity<String> {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Commande pris en compte")
     }
 }

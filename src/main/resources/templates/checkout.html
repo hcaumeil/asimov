@@ -152,8 +152,8 @@
 
                 <hr class="my-4">
 
-                <button class="w-100 btn btn-secondary btn-lg" type="submit" onclick="handleOrder()">Finaliser le paiement</button>
             </form>
+                <button class="w-100 btn btn-secondary btn-lg" onclick="handleOrder()">Finaliser le paiement</button>
         </div>
     </div>
 
@@ -181,7 +181,7 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(sessionStorage.getItem("id"))
+                    body: JSON.stringify({"id": sessionStorage.getItem("id"), "country": "france"})
                 }).then(res => res.ok).then(res => {
                     console.log(res)
                 })
