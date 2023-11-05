@@ -31,28 +31,12 @@
                 <td th:text="${i.product.price}">price</td>
                 <td th:text="${i.quantity}">quantity</td>
                 <td><button th:onclick="'handleDeleteCartProduct('+${i.id}+')'">Supprimmer</button></td>
-                <script>
-                    const handleDeleteCartProduct = (id) => {
-                        fetch('http://localhost:8080/cart/delete', {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(id)
-                        }).then(res => res.ok).then(res => {
-                            console.log(res)
-                            updateEventCartProduct()
-                        })
-                        return false;
-                    }
-                </script>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="container d-flex justify-content-end" style="padding-bottom: 4rem;">
-        <button class="btn btn-dark" onclick={order()}>Commander</button>
+        <a id="btn-checkout" class="nav-link px-2 fs-4 text-white">Commander</a> <script>document.getElementById("btn-checkout").href = "/checkout/"+sessionStorage.getItem("id")</script>
     </div>
     <script>
         function updateEventCartProduct() {
@@ -60,8 +44,19 @@
                 $("#cart-product-table").replaceWith(fragment); // update snippet of page
             });
         }
-        function order() {
-
+        const handleDeleteCartProduct = (id) => {
+            fetch('http://localhost:8080/cart/delete', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(id)
+            }).then(res => res.ok).then(res => {
+                console.log(res)
+                updateEventCartProduct()
+            })
+            return false;
         }
     </script>
 </body>

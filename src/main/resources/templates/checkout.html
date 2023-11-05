@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Commande</title>
+</head>
+<body>
+    <div th:insert="~{header :: header}"></div>
+    <div>
+        <h1>Information d'envoie</h1>
+        <input id="ship-info-form-family-name" type="text" placeholder="Nom"/>
+        <label for="ship-info-form-family-name">Nom</label>
+        <input id="ship-info-form-name" type="text" placeholder="Prénom"/>
+        <label for="ship-info-form-name">Prénom</label>
+        <input id="ship-info-form-adresse" type="text" placeholder="Adresse"/>
+        <label for="ship-info-form-adresse">Adresse</label>
+        <input id="ship-info-form-zip" type="text" placeholder="ZIP Code"/>
+        <label for="ship-info-form-zip">Zip Code</label>
+        <select id="ship-info-form-country" onchange="updateTax()" >
+            <option value="france" selected>France</option>
+            <option value="usa">Etat-Unis</option>
+            <option value="spain">Espagne</option>
+        </select>
+        <label for="ship-info-form-country">Pays</label>
+    </div>
+    <div>
+        <h1>Paiement</h1>
+        <input id="card-info-form-number" type="text" placeholder="Numéro de carte"/>
+        <label for="card-info-form-number">Nom</label>
+        <input id="card-info-form-name" type="text" placeholder="Nom sur la carte"/>
+        <label for="card-info-form-name">Nom sur la carte</label>
+        <input id="card-info-form-code" type="text" placeholder="Cryptogramme visuel"/>
+        <label for="card-info-form-code">Cryptogramme visuel</label>
+        <input id="card-info-form-month" type="month" min="2023-09" max="2028-01" placeholder="YYYY-MM"/>
+        <label for="card-info-form-month">Année et mois d'expiration</label>
+    </div>
+    <div>
+        <h1>Panier</h1>
+        <table id="cart-product-table" class="">
+            <tbody class="table-group-divider">
+                <tr th:each="i : ${items}">
+                    <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${i.product.image.name}}"></td>
+                    <td th:text="${i.product.reference}">reference</td>
+                    <td th:text="${i.product.description}">description</td>
+                    <td th:text="${i.product.price}">price</td>
+                    <td th:text="${i.quantity}">quantity</td>
+                </tr>
+            </tbody>
+        </table>
+        <input id="sub-cost" type="hidden" th:value="${total}">
+        <p th:text="'Sous total:' + ${total}"></p>
+        <p>Frais de transport: <span id="ship-tax">0.0</span></p>
+        <p id="total-cost"></p>
+        <script>
+            const subCost = document.getElementById('sub-cost');
+            const shipTax = document.getElementById('ship-tax');
+            const totalCost = document.getElementById('total-cost');
+            const country = document.getElementById('ship-info-form-country');
+
+            updateTax()
+            function updateTax() {
+                shipTax.innerHTML = country.value === "france" ? "0.0" : country.value === "usa" ? "20.0" : "5.0"
+                totalCost.innerHTML = "Total: " + (parseFloat(shipTax.innerHTML) + parseFloat(subCost.value)).toString() + "€"
+            }
+        </script>
+    </div>
+</body>
+</html>

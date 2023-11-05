@@ -20,7 +20,7 @@ class Cart {
     lateinit var repository : CartProductRepository;
     @GetMapping("/cart/{id}")
     @Transactional
-    fun cartNotConnected(@PathVariable("id") id: Long, model : Model) : String {
+    fun cart(@PathVariable("id") id: Long, model : Model) : String {
         model.addAttribute("items", repository.findAllByUserId(id))
         return "cart"
     }
