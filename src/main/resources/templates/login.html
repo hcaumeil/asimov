@@ -45,6 +45,8 @@
 
                         const handleDeconnection = () => {
                             sessionStorage.removeItem('id')
+                            sessionStorage.removeItem('role')
+
                             btnDeconnexion.style.display = "none"
                             btnConnexion.style.display = "inline-block"
                             infoBox.innerHTML = "Vous avez été déconnecté"
