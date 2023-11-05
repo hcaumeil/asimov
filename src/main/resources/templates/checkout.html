@@ -51,6 +51,7 @@
         <p th:text="'Sous total:' + ${total}"></p>
         <p>Frais de transport: <span id="ship-tax">0.0</span></p>
         <p id="total-cost"></p>
+        <button onclick="handleOrder()">Commander</button>
         <script>
             const subCost = document.getElementById('sub-cost');
             const shipTax = document.getElementById('ship-tax');
@@ -61,6 +62,20 @@
             function updateTax() {
                 shipTax.innerHTML = country.value === "france" ? "0.0" : country.value === "usa" ? "20.0" : "5.0"
                 totalCost.innerHTML = "Total: " + (parseFloat(shipTax.innerHTML) + parseFloat(subCost.value)).toString() + "€"
+            }
+
+            const handleOrder = () => {
+                fetch('http://localhost:8080/checkout/order', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(sessionStorage.getItem("id"))
+                }).then(res => res.ok).then(res => {
+                    console.log(res)
+                })
+                return false;
             }
         </script>
     </div>

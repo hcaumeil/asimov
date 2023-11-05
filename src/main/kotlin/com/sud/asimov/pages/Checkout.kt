@@ -3,10 +3,14 @@ package com.sud.asimov.pages
 import com.sud.asimov.api.cartproduct.CartProductRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -31,5 +35,11 @@ class Checkout {
                 .apply { roundingMode = RoundingMode.FLOOR }
                 .format(total))
         return "checkout"
+    }
+
+    @PostMapping("/checkout/order")
+    @Transactional
+    fun orderSubmit(@RequestBody id : Long, model: Model): ResponseEntity<String> {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Commande pris en compte")
     }
 }
