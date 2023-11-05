@@ -13,6 +13,12 @@ class Command(
         var products: List<CartProduct>,
         @ManyToOne
         var user: User,
+
+        var name: String,
+        var family_name: String,
+        var address: String,
+        var country: String,
+        var zip_code: String,
 ) {
 }
 
