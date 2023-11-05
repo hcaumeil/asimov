@@ -3,55 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <title>Commande</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <div th:insert="~{header :: header}"></div>
-    <div>
-        <h1>Information d'envoie</h1>
-        <input id="ship-info-form-family-name" type="text" placeholder="Nom"/>
-        <label for="ship-info-form-family-name">Nom</label>
-        <input id="ship-info-form-name" type="text" placeholder="Prénom"/>
-        <label for="ship-info-form-name">Prénom</label>
-        <input id="ship-info-form-adresse" type="text" placeholder="Adresse"/>
-        <label for="ship-info-form-adresse">Adresse</label>
-        <input id="ship-info-form-zip" type="text" placeholder="ZIP Code"/>
-        <label for="ship-info-form-zip">Zip Code</label>
-        <select id="ship-info-form-country" onchange="updateTax()" >
-            <option value="france" selected>France</option>
-            <option value="usa">Etat-Unis</option>
-            <option value="spain">Espagne</option>
-        </select>
-        <label for="ship-info-form-country">Pays</label>
+    <div class="container" style="padding-top: 4rem">
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-warning">Panier</span>
+                <span class="badge bg-warning rounded-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm" th:each="i : ${items}">
+                    <div>
+                        <h6 class="my-0" th:text="${i.product.reference}">Product name</h6>
+                        <small class="text-body-secondary" th:text="${i.product.description}">Brief description</small>
+                    </div>
+                    <span class="text-body-secondary" th:text="${i.quantity}+'x'+${i.product.price}+'€'">$12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                    <div class="text-success">
+                        <h6 class="my-0">Frais de port</h6>
+                        <small>Mondial Relay</small>
+                    </div>
+                    <p class="text-success"><span id="ship-tax" class="text-success"></span>€</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (EUR)</span>
+                    <p id="total-cost"></p>
+
+                </li>
+            </ul>
+
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Code promo">
+                    <button type="submit" class="btn btn-secondary">Obtenir</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Information d'envoie</h4>
+            <form class="needs-validation" novalidate="">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="ship-info-form-family-name" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="ship-info-form-family-name" placeholder="" value="" required="">
+                        <div class="invalid-feedback">
+                            Un nom valide est requis.
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="ship-info-form-name" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" id="ship-info-form-name" placeholder="" value="" required="">
+                        <div class="invalid-feedback">
+                            Un prénom valide est requis.
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="ship-info-form-adresse" class="form-label">Addresse</label>
+                        <input type="text" class="form-control" id="ship-info-form-adresse" placeholder="2 Bd Lucien Favre" required="">
+                        <div class="invalid-feedback">
+                            Veuillez entrer votre adresse de livraison.
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <label for="ship-info-form-country" class="form-label">Pays</label>
+                        <select class="form-select" id="ship-info-form-country" onchange="updateTax()">
+                            <option value="france" selected>France</option>
+                            <option value="usa">Etat-Unis</option>
+                            <option value="spain">Espagne</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="ship-info-form-zip" class="form-label">ZIP code</label>
+                        <input type="text" class="form-control" id="ship-info-form-zip" placeholder="64000">
+                        <div class="invalid-feedback">
+                            Zip code required.
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="save-info">
+                    <label class="form-check-label" for="save-info">Sauvegarder ces informations pour la prochaine fois</label>
+                </div>
+
+                <hr class="my-4">
+
+                <h4 class="mb-3">Paiement</h4>
+
+                <div class="my-3">
+                    <div class="form-check">
+                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+                        <label class="form-check-label" for="credit">Carte de crédit</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                        <label class="form-check-label" for="debit">Carte de débit</label>
+                    </div>
+                </div>
+
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                        <label for="card-info-form-name" class="form-label">Nom sur la carte</label>
+                        <input type="text" class="form-control" id="card-info-form-name" placeholder="" required="">
+                        <small class="text-body-secondary">Nom complet comme présenter sur la carte</small>
+                        <div class="invalid-feedback">
+                            Nom sur la carte requis
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="card-info-form-number" class="form-label">Numéro de carte</label>
+                        <input type="text" class="form-control" id="card-info-form-number" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Numéro de carte requis
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="card-info-form-month" class="form-label">Date d'expiration</label>
+                        <input type="month" min="2023-09" max="2028-01" class="form-control" id="card-info-form-month" placeholder="YYYY-MM" required="">
+                        <div class="invalid-feedback">
+                            Date d'expiration requise
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="card-info-form-code" class="form-label">Cryptogramme visuel</label>
+                        <input type="text" class="form-control" id="card-info-form-code" placeholder="" required="">
+                        <div class="invalid-feedback">
+                            Code de sécurité nécessaire
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <button class="w-100 btn btn-secondary btn-lg" type="submit" onclick="handleOrder()">Finaliser le paiment</button>
+            </form>
+        </div>
     </div>
+
     <div>
-        <h1>Paiement</h1>
-        <input id="card-info-form-number" type="text" placeholder="Numéro de carte"/>
-        <label for="card-info-form-number">Nom</label>
-        <input id="card-info-form-name" type="text" placeholder="Nom sur la carte"/>
-        <label for="card-info-form-name">Nom sur la carte</label>
-        <input id="card-info-form-code" type="text" placeholder="Cryptogramme visuel"/>
-        <label for="card-info-form-code">Cryptogramme visuel</label>
-        <input id="card-info-form-month" type="month" min="2023-09" max="2028-01" placeholder="YYYY-MM"/>
-        <label for="card-info-form-month">Année et mois d'expiration</label>
-    </div>
-    <div>
-        <h1>Panier</h1>
-        <table id="cart-product-table" class="">
-            <tbody class="table-group-divider">
-                <tr th:each="i : ${items}">
-                    <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${i.product.image.name}}"></td>
-                    <td th:text="${i.product.reference}">reference</td>
-                    <td th:text="${i.product.description}">description</td>
-                    <td th:text="${i.product.price}">price</td>
-                    <td th:text="${i.quantity}">quantity</td>
-                </tr>
-            </tbody>
-        </table>
         <input id="sub-cost" type="hidden" th:value="${total}">
-        <p th:text="'Sous total:' + ${total}"></p>
-        <p>Frais de transport: <span id="ship-tax">0.0</span></p>
-        <p id="total-cost"></p>
-        <button onclick="handleOrder()">Commander</button>
+
+
+
         <script>
             const subCost = document.getElementById('sub-cost');
             const shipTax = document.getElementById('ship-tax');
@@ -78,6 +188,8 @@
                 return false;
             }
         </script>
+
+    </div>
     </div>
 </body>
 </html>
