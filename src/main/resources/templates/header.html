@@ -62,6 +62,7 @@
                     btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
                     btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
                     btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
+                    window.location.href = "/"
                 }
             </script>
         </header>
