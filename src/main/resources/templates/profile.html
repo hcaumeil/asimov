@@ -10,7 +10,8 @@
 <body class="bg-body-secondary">
 <div th:insert="~{header :: header}"></div>
 <div class="container" style="padding-top: 4rem;">
-    <h1>Bonjour <span th:text="${user.name}"></span></h1>
+    <h1>Bonjour <span th:text="${user.name}"></span> </h1>
+    <h4>Voici l'historique des commandes passées</h4>
 
 <div id="user-command-list" class="">
     <table class="table">
