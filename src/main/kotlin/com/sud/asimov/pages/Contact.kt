@@ -18,10 +18,6 @@ class Contact {
 
     @PostMapping("/contact")
     fun greetingSubmit(@ModelAttribute contactData : ContactDTO, model: Model): String {
-        // Traitement
-        // Erreur inattendu ?
-        //model.addAttribute("message", "Erreur : Un problème serveur est survenu")
-
         model.addAttribute("contactDTO", ContactDTO())
         model.addAttribute("message", "Votre message a bien été envoyé")
         return "contact"

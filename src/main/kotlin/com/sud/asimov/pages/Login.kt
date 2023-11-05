@@ -20,10 +20,9 @@ class Login {
 
     @PostMapping("/login")
     fun greetingSubmit(@ModelAttribute loginData : LoginDTO, model: Model): String {
-        // verifie email / password
-        if (loginData.email == "a") { // Debug
+        if (loginData.email == "a") { 
             model.addAttribute("error", "Erreur : Email ou mot de passe incorrect")
-            model.addAttribute("loginDTO", LoginDTO()) // debug
+            model.addAttribute("loginDTO", LoginDTO()) 
             // Return error
             return "login"
         }

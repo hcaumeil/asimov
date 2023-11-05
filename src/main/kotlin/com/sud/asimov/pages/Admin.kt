@@ -33,9 +33,6 @@ class Admin {
     lateinit var cartProductsRepository : CartProductRepository;
     @GetMapping("/admin")
     fun admin(model : Model) : String {
-        // Check creditials
-        // return 403
-
         model.addAttribute("users", userRepository.findAll())
         model.addAttribute("products", productsRepository.findAll())
         model.addAttribute("categories", categoryRepository.findAll())

@@ -34,7 +34,6 @@ public class FileController {
           if (file == null) {
               return null  
           } else {
-            // return ByteArrayResource(file.content);
              return ResponseEntity
                 .ok()
                 .contentType(MediaType.MULTIPART_FORM_DATA)

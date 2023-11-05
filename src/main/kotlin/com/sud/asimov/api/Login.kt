@@ -21,15 +21,6 @@ public class UserDetails(
         var role : String
 ) {}
 
-// class User (
-//   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-//   public val id: Long? = null,
-//   public var name: String,
-//   public var family_name: String,
-//   public var email: String,
-//   public var password: String) {
-// }
-
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
