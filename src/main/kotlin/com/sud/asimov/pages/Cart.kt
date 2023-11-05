@@ -25,6 +25,12 @@ class Cart {
         return "cart"
     }
 
+    @GetMapping("/cart/null")
+    @Transactional
+    fun cartNull(model : Model) : String {
+        return "403"
+    }
+
     @PostMapping("/cart/delete")
     @Transactional
     fun productDeleteSubmit(@RequestBody id : Long, model: Model): ResponseEntity<String> {
