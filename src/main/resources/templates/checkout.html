@@ -166,12 +166,27 @@
             const subCost = document.getElementById('sub-cost');
             const shipTax = document.getElementById('ship-tax');
             const totalCost = document.getElementById('total-cost');
-            const country = document.getElementById('ship-info-form-country');
+            const country = document.getElementById('ship-info-form-country').value;
+            const address = document.getElementById('ship-info-form-adresse').value;
+            const zip_code = document.getElementById('ship-info-form-zip').value;
+            const family_name = document.getElementById('ship-info-form-family-name').value;
+            const name = document.getElementById('ship-info-form-family-name').value;
+
+            var currentdate = new Date(); 
+            var date = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
+            var price = 0;
 
             updateTax()
             function updateTax() {
                 shipTax.innerHTML = country.value === "france" ? "0.0" : country.value === "usa" ? "20.0" : "5.0"
                 totalCost.innerHTML = "Total: " + (parseFloat(shipTax.innerHTML) + parseFloat(subCost.value)).toString() + "€"
+                price = parseFloat(shipTax.innerHTML) + parseFloat(subCost.value)
             }
 
             const handleOrder = () => {
@@ -181,7 +196,8 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({"id": sessionStorage.getItem("id"), "country": "france"})
+                    body: JSON.stringify({"userid": sessionStorage.getItem("id"), name, family_name, address, country, zip_code, price, date})
+
                 }).then(res => res.ok).then(res => {
                     console.log(res)
                 })

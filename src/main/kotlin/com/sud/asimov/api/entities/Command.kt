@@ -10,16 +10,17 @@ class Command(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         public val id: Long? = null,
         @OneToMany
-        var products: List<CartProduct>,
+        public var products: List<CartProduct>,
         @ManyToOne
-        var user: User,
+        public var user: User,
 
-        var name: String,
-        var family_name: String,
-        var address: String,
-        var country: String,
-        var zip_code: String,
-        var price: Float,
+        public var name: String,
+        public var family_name: String,
+        public var address: String,
+        public var country: String,
+        public var zip_code: String,
+        public var price: Float,
+        public var date: String,
 ) {
 }
 

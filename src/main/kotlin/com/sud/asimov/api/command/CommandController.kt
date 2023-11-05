@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sud.asimov.Command;
+import org.springframework.http.ResponseEntity;
+
+public class CommandInfo (
+     id : Long,
+     user: User,
+) {}
 
 
 @RestController
@@ -20,8 +26,11 @@ public class CommandController {
     lateinit var repository : CommandRepository;
 
     @GetMapping()
-	fun get(): List<Command> {
-        return repository.findAll();
+	fun get(): List<CommandInfo> {
+        var cmds = repository.findAll();
+        var res : List<CommandInfo> = cmds.map { CommandInfo(it.id!!, it.user) } as List<CommandInfo>
+
+        return res
 	}
 
 

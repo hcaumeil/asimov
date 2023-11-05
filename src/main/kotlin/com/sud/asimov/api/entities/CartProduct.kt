@@ -9,7 +9,7 @@ class CartProduct(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         public val id: Long? = null,
         @ManyToOne
-        var user: User,
+        var user: User?,
         @ManyToOne
         var product: Product,
         var quantity : Long,
