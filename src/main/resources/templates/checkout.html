@@ -51,7 +51,7 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label for="ship-info-form-family-name" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="ship-info-form-family-name" placeholder="" value="" required="">
+                        <input type="text" class="form-control" id="ship-info-form-family-name" placeholder="" >
                         <div class="invalid-feedback">
                             Un nom valide est requis.
                         </div>
@@ -166,11 +166,11 @@
             const subCost = document.getElementById('sub-cost');
             const shipTax = document.getElementById('ship-tax');
             const totalCost = document.getElementById('total-cost');
-            const country = document.getElementById('ship-info-form-country').value;
-            const address = document.getElementById('ship-info-form-adresse').value;
-            const zip_code = document.getElementById('ship-info-form-zip').value;
-            const family_name = document.getElementById('ship-info-form-family-name').value;
-            const name = document.getElementById('ship-info-form-family-name').value;
+            const country = document.getElementById('ship-info-form-country');
+            const address = document.getElementById('ship-info-form-adresse');
+            const zip_code = document.getElementById('ship-info-form-zip');
+            const family_name = document.getElementById('ship-info-form-family-name');
+            const name = document.getElementById('ship-info-form-family-name');
 
             var currentdate = new Date(); 
             var date = "Last Sync: " + currentdate.getDate() + "/"
@@ -190,16 +190,21 @@
             }
 
             const handleOrder = () => {
+                let a = name.value
+                let b = family_name.value
+                let c = address.value
+                let d = country.value
+                let e = zip_code.value
                 fetch('http://localhost:8080/checkout/order', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({"userid": sessionStorage.getItem("id"), name, family_name, address, country, zip_code, price, date})
-
+                    body: JSON.stringify({"userid": sessionStorage.getItem("id"), "name":a, "family_name":b, "address":c, "country":d, "zip_code":e, price, date})
                 }).then(res => res.ok).then(res => {
                     console.log(res)
+                    window.location.href = "/"
                 })
                 return false;
             }
