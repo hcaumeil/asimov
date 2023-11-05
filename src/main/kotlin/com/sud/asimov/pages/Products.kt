@@ -45,7 +45,13 @@ class Products {
         val p = productsRepository.findById(productCommandData.productId)
         if (p.isEmpty) return ResponseEntity.badRequest().body("Product not found")
 
-        cartProductRepository.save(CartProduct(null, u.get(), p.get(), productCommandData.quantity))
+        val existing = cartProductRepository.findByUserIdAndProductId(u.get().id!!, p.get().id!!)
+
+        if (existing == null) cartProductRepository.save(CartProduct(null, u.get(), p.get(), productCommandData.quantity))
+        else {
+            existing.quantity += productCommandData.quantity
+            cartProductRepository.save(existing)
+        }
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Commande pris en compte")
     }

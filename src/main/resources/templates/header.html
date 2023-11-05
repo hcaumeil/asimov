@@ -12,7 +12,7 @@
                 <div class="nav col me-lg-auto mb-2 justify-content-center mb-md-0" id="nav-bar-right">
                     <a class="nav-link px-2 fs-4 text-warning" href="index.html" th:href="@{/}">Accueil</a>
                     <a class="nav-link px-2 fs-4 text-white" href="categories.html" th:href="@{/categories}">Catégories</a>
-                    <a id="btn-cart" class="nav-link px-2 fs-4 text-white">Panier</a> <script>document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")</script>
+                    <a id="btn-cart" class="nav-link px-2 fs-4 text-white">Panier</a>
                     <a id="btn-admin" class="nav-link px-2 fs-4 text-white" href="administration.html" th:href="@{/admin}">Administration</a>
                     <a class="nav-link px-2 fs-4 text-white" href="contact.html" th:href="@{/contact}">Contact</a>
                 </div>
@@ -33,6 +33,7 @@
                     btnHeaderDeconnexion.style.display = "inline-block"
                     btnHeaderLogin.style.display = "none"
                     btnHeaderRegister.style.display = "none"
+                    document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
                 } else {
                     btnHeaderDeconnexion.style.display = "none"
                     btnHeaderLogin.style.display = "inline-block"
@@ -46,6 +47,7 @@
                     btnHeaderDeconnexion.style.display = "none"
                     btnHeaderLogin.style.display = "inline-block"
                     btnHeaderRegister.style.display = "inline-block"
+                    document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
                 }
             </script>
         </header>
