@@ -24,19 +24,23 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="p, itemStat : ${products}">
-                <input id="products-form-count" type="hidden" th:value="${itemStat.count}"/>
-                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image.name}}"></td>
-                <td th:text="${p.reference}">reference</td>
-                <td th:text="${p.description}">description</td>
-                <td th:text="${p.price}">price</td>
-                <input th:attr="id='products-form-quantity'+${itemStat.index}" type="text" th:value="${p.quantity}"/>
+            <tr th:each="i : ${items}">
+                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${i.product.image.name}}"></td>
+                <td th:text="${i.product.reference}">reference</td>
+                <td th:text="${i.product.description}">description</td>
+                <td th:text="${i.product.price}">price</td>
+                <td th:text="${i.quantity}">quantity</td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="container d-flex justify-content-end" style="padding-bottom: 4rem;">
-        <button class="btn btn-dark" onclick={processForm()}>Commander</button>
+        <button class="btn btn-dark" onclick={order()}>Commander</button>
     </div>
+    <script>
+        function order() {
+
+        }
+    </script>
 </body>
 </html>
