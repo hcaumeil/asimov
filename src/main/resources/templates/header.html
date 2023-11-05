@@ -13,13 +13,16 @@
                     <a class="nav-link px-2 fs-4 text-warning" href="index.html" th:href="@{/}">Accueil</a>
                     <a class="nav-link px-2 fs-4 text-white" href="categories.html" th:href="@{/categories}">Catégories</a>
                     <a id="btn-cart" class="nav-link px-2 fs-4 text-white">Panier</a>
-                    <a id="btn-admin" class="nav-link px-2 fs-4 text-white" href="administration.html" th:href="@{/admin}">Administration</a>
                     <a class="nav-link px-2 fs-4 text-white" href="contact.html" th:href="@{/contact}">Contact</a>
                 </div>
                 <div class="col text-end" id="nav-bar-left">
                     <a id="header-btn-login" class="btn btn-outline-light me-2" href="login.html" th:href="@{/login}">Connexion</a>
                     <a id="header-btn-register" class="btn btn-warning" href="register.html" th:href="@{/register}">Inscription</a>
+
                     <button class="btn btn-warning" id="header-btn-deconnection" onclick="handleHeaderDeconnection()">Déconnexion</button>
+                    <a id="btn-admin" class="nav-link px-2 fs-4 text-white" href="administration.html" th:href="@{/admin}">Administration</a>
+                    <a id="header-btn-profil" class="btn btn-warning" href="profil.html" th:href="@{/profil}">Profil</a>
+                    <a id="header-btn-merchant" class="btn btn-warning" href="merchant.html" th:href="@{/merchant}">Marchand</a>
                 </div>
             </nav>
             <script>
@@ -27,10 +30,16 @@
                 const btnHeaderLogin = document.getElementById("header-btn-login")
                 const btnHeaderRegister = document.getElementById("header-btn-register")
                 const btnHeaderDeconnexion = document.getElementById("header-btn-deconnection")
-                btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "block"
+                const btnHeaderProfil = document.getElementById("header-btn-profil")
+                const btnHeaderMerchant = document.getElementById("header-btn-merchant")
+
+                btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
+                btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
+                btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
 
                 if(sessionStorage.getItem("id")) {
                     btnHeaderDeconnexion.style.display = "inline-block"
+
                     btnHeaderLogin.style.display = "none"
                     btnHeaderRegister.style.display = "none"
                     document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
@@ -48,7 +57,9 @@
                     btnHeaderLogin.style.display = "inline-block"
                     btnHeaderRegister.style.display = "inline-block"
                     document.getElementById("btn-cart").href = "/cart/"+sessionStorage.getItem("id")
-                    btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "block"
+                    btnAdmin.style.display = sessionStorage.getItem("role") !== "admin" ? "none" : "inline-block"
+                    btnHeaderProfil.style.display = sessionStorage.getItem("role") !== "merchant" ? "none" : "inline-block"
+                    btnHeaderMerchant.style.display = sessionStorage.getItem("role") !== "client" ? "none" : "inline-block"
                 }
             </script>
         </header>
