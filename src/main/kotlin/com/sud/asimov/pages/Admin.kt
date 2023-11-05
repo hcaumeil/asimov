@@ -27,6 +27,9 @@ class Admin {
     lateinit var productsRepository : ProductRepository;
 
     @Autowired
+    lateinit var fileRepository : FileRepository;
+
+    @Autowired
     lateinit var cartProductsRepository : CartProductRepository;
     @GetMapping("/admin")
     fun admin(model : Model) : String {
@@ -96,6 +99,21 @@ class Admin {
     @PostMapping("/admin/add/product")
     @Transactional
     fun productAddSubmit(@RequestBody product : ProductAddDTO, model: Model): ResponseEntity<String> {
+        var files = fileRepository.findAll();
+        var image : File? = null;
+
+        for (f in files) {
+            if (f.name == product.image) {
+                image = f;
+                break;
+            }
+        }
+
+        if (image == null) {
+            return ResponseEntity.badRequest()
+            .body("L'image du produit n'a pas été trouvée");
+        }
+
         productsRepository.save(Product(null,
                 product.name,
                 Category(product.category),
@@ -103,7 +121,7 @@ class Admin {
                 product.description,
                 product.stock,
                 product.reference,
-                null)) // TODO: Change by file
+                image)) 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Produit ajouté")
     }
 

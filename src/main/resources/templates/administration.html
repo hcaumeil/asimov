@@ -78,27 +78,6 @@
     </div>
 
     <div id="admin-products-list" class="">
-        <table class="table">
-            <thead class="table-secondary">
-            <tr>
-                <th scope="col">Photo</th>
-                <th scope="col">Réference</th>
-                <th scope="col">Description</th>
-                <th scope="col">Prix</th>
-                <th scope="col">Stock</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            <tr th:each="p : ${products}">
-                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image?.name}}"></td>
-                <td th:text="${p.reference}">reference</td>
-                <td th:text="${p.description}">description</td>
-                <td th:text="${p.price}">price</td>
-                <td th:text="${p.stock}">stock</td>
-                <td><button th:onclick="'handleDeleteProduct('+${p.id}+')'">Supprimmer</button></td>
-            </tr>
-            </tbody>
-        </table>
         <div>
             <h2>Ajouter un produit</h2>
             <input id="add-product-form-name" type="text" placeholder="Nom"/>
@@ -128,16 +107,13 @@
                     const reference = document.getElementById('add-product-form-reference').value;
 
                     const file = document.getElementById("add-product-form-image").files[0];
-                    file.name = name;
+                    const image = file.name;
                     let fd = new FormData();
                     fd.append('file', file);
                     console.log(fd)
 
                     fetch('http://localhost:8080/api/file', {
                         method: 'POST',
-                        headers: {
-                            'content-type': 'multipart/form-data; boundary=ebf9f03029db4c2799ae16b5428b06bd'
-                        },
                         body: fd
                     }).then(res => res.ok).then(res => {
                         console.log(res)
@@ -148,7 +124,7 @@
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({name, category, price, description, stock, reference})
+                        body: JSON.stringify({name, category, price, description, stock, reference, image})
                     }).then(res => res.ok).then(res => {
                         console.log(res)
                         updateEventProduct()
@@ -157,6 +133,27 @@
                 }
             </script>
         </div>
+        <table class="table">
+            <thead class="table-secondary">
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Réference</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Stock</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="p : ${products}">
+                <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image?.name}}"></td>
+                <td th:text="${p.reference}">reference</td>
+                <td th:text="${p.description}">description</td>
+                <td th:text="${p.price}">price</td>
+                <td th:text="${p.stock}">stock</td>
+                <td><button th:onclick="'handleDeleteProduct('+${p.id}+')'">Supprimmer</button></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div id="admin-categories-list">
