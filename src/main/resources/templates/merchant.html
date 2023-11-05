@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merchant</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:insert="~{header :: header}"></div>
+<div class="container" style="padding-top: 4rem;">
+    <h1>Marchand</h1>
+</div>
+<div id="merchant-products-list" class="">
+    <div>
+        <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling1" aria-controls="offcanvasScrolling" style="margin-bottom: 1rem;">Ajouter un produit</button>
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling1" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Ajouter un produit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="form-floating mb-3">
+                    <input id="add-product-form-name" type="text" placeholder="Nom" class="form-control rounded-3"/>
+                    <label for="add-product-form-name">Nom</label>
+                </div>
+                <div class="dropdown mb-3">
+                    <select class="btn btn-outline-secondary btn-lg dropdown-toggle" id="add-product-form-categories">
+                        <option th:each="c : ${categories}" th:value="${c.name}" th:text="${c.name}"></option>
+                    </select>
+                    <label for="add-product-form-categories">Catégories</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input id="add-product-form-price" type="number" placeholder="Prix" class="form-control rounded-3"/>
+                    <label for="add-product-form-price">Prix</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input id="add-product-form-description" type="text" placeholder="Description" class="form-control rounded-3"/>
+                    <label for="add-product-form-description">Description</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input id="add-product-form-stock" type="text" placeholder="Stock" class="form-control rounded-3"/>
+                    <label for="add-product-form-stock">Stock</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input id="add-product-form-reference" type="text" placeholder="Référence" class="form-control rounded-3"/>
+                    <label for="add-product-form-reference">Référence</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input id="add-product-form-image" type="file" placeholder="Image" class="form-control rounded-3"/>
+                    <label for="add-product-form-image">Image</label>
+                </div>
+                <button class="btn btn-secondary" onclick="handleAddProduct()">Ajouter</button>
+                <script>
+                    function handleAddProduct() {
+                        const name = document.getElementById('add-product-form-name').value;
+                        const category = document.getElementById('add-product-form-categories').value;
+                        const price = document.getElementById('add-product-form-price').value;
+                        const description = document.getElementById('add-product-form-description').value;
+                        const stock = document.getElementById('add-product-form-stock').value;
+                        const reference = document.getElementById('add-product-form-reference').value;
+
+                        const file = document.getElementById("add-product-form-image").files[0];
+                        const image = file.name;
+                        let fd = new FormData();
+                        fd.append('file', file);
+                        console.log(fd)
+
+                        fetch('http://localhost:8080/api/file', {
+                            method: 'POST',
+                            body: fd
+                        }).then(res => res.ok).then(res => {
+                            console.log(res)
+                        })
+                        fetch('http://localhost:8080/merchant/add/product', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({name, category, price, description, stock, reference, image})
+                        }).then(res => res.ok).then(res => {
+                            console.log(res)
+                            updateEventProduct()
+                        })
+                        return false;
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead class="table-secondary">
+        <tr>
+            <th scope="col">Photo</th>
+            <th scope="col">Réference</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Stock</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="p : ${products}">
+            <td ><img style="height: 5rem;" th:src="@{'/api/file/' + ${p.image?.name}}"></td>
+            <td th:text="${p.reference}">reference</td>
+            <td th:text="${p.description}">description</td>
+            <td th:text="${p.price}">price</td>
+            <td th:text="${p.stock}">stock</td>
+            <td><button th:onclick="'handleDeleteProduct('+${p.id}+')'" class="btn btn-outline-secondary">Supprimmer</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+
+    const handleDeleteProduct = (id) => {
+        console.log(id)
+        fetch('http://localhost:8080/admin/delete/product', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id)
+        }).then(res => res.ok).then(res => {
+            console.log(res)
+            updateEventProduct()
+        })
+        return false;
+    }
+    function updateEventProduct() {
+        $.get("/merchant/fragment/product").done(function(fragment) { // get from controller
+            $("#merchant-products-list").replaceWith(fragment); // update snippet of page
+        });
+    }
+</script>
+</body>
+</html>
