@@ -4,6 +4,7 @@ import com.sud.asimov.api.cartproduct.CartProductRepository
 import com.sud.asimov.api.entities.CartProduct
 import com.sud.asimov.CommandRepository
 import com.sud.asimov.Command
+import com.sud.asimov.ProductRepository
 import com.sud.asimov.pages.dto.CommandDTO
 import com.sud.asimov.UserRepository
 import jakarta.transaction.Transactional
@@ -23,6 +24,10 @@ import java.text.DecimalFormat
 class Checkout {
     @Autowired
     lateinit var repository : CartProductRepository;
+
+    @Autowired
+    lateinit var productRepository : ProductRepository;
+
     @Autowired
     lateinit var commandRepository : CommandRepository;
     @Autowired
@@ -56,6 +61,14 @@ class Checkout {
         var cp = repository.findAllByUserId(body.userid)
         var products : List<CartProduct> = cp.filter { it != null } as List<CartProduct>; 
         products.map { it.user = null }
+        val it = products.listIterator()
+        while (it.hasNext()) {
+            val p = it.next()
+            if (p.product.id != null) {
+                val m = productRepository.findById(p.product.id!!)
+                m.get().stock -= p.quantity.toInt()
+            }
+        }
 
         var cmd = Command(null, products, userRepository.findById(body.userid).get(), body.name, body.family_name, body.address, body.country, body.zip_code, body.price , body.date)
         commandRepository.save(cmd)

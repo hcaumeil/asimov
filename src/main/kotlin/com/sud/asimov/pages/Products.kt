@@ -49,7 +49,10 @@ class Products {
 
         if (existing == null) cartProductRepository.save(CartProduct(null, u.get(), p.get(), productCommandData.quantity))
         else {
-            existing.quantity += productCommandData.quantity
+            if (existing.quantity + productCommandData.quantity <= existing.product.stock)
+                existing.quantity += productCommandData.quantity
+            else
+                existing.quantity = existing.product.stock.toLong()
             cartProductRepository.save(existing)
         }
 
