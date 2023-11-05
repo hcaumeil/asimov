@@ -1,6 +1,7 @@
 package com.sud.asimov.pages
 
 import com.sud.asimov.api.cartproduct.CartProductRepository
+import com.sud.asimov.pages.dto.CommandDTO
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -39,7 +40,7 @@ class Checkout {
 
     @PostMapping("/checkout/order")
     @Transactional
-    fun orderSubmit(@RequestBody id : Long, model: Model): ResponseEntity<String> {
+    fun orderSubmit(@RequestBody body: CommandDTO , model: Model): ResponseEntity<String> {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Commande pris en compte")
     }
 }
